@@ -69,7 +69,7 @@ const Footer = () => {
           <div className="footer-bottom-content">
             <p className="copyright">
               © {new Date().getFullYear()} Affix Polymers. All rights reserved.
-              <span className="developed-by"> Website developed by <a href="https://www.uinetix.com" target="_blank" rel="noopener noreferrer" className="uinetix-link">UiNetix</a></span>
+              <span className="developed-by"> Website developed by <a href="https://uinetix.vercel.app/" target="_blank" rel="noopener noreferrer" className="uinetix-link">UiNetix</a></span>
             </p>
            
           </div>
