@@ -186,7 +186,7 @@ const Contact = () => {
                 </button>
 
                 <p className="form-footer">
-                  For direct inquiries, reach us at <a href="affixpolymers@gmail.com">affixpolymers@gmail.com</a>
+                  For direct inquiries, reach us at affixpolymers@gmail.com
                 </p>
               </form>
             </div>

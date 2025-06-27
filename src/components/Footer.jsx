@@ -23,6 +23,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="footer-section">
+            <div className='footer-l'>
             <h4 className="footer-subtitle">Quick Links</h4>
             <ul className="footer-links">
               <li><a href="#home" className="footer-link">Home</a></li>
@@ -30,10 +31,12 @@ const Footer = () => {
               <li><a href="#products" className="footer-link">Our Products</a></li>
               <li><a href="#contact" className="footer-link">Contact</a></li>
             </ul>
+            </div>
           </div>
 
           {/* Services */}
           <div className="footer-section">
+            <div className='footer-l'>
             <h4 className="footer-subtitle">Our Solutions</h4>
             <ul className="footer-links">
               <li><a href="#" className="footer-link">Hot & Cold Vulcanizing</a></li>
@@ -41,6 +44,7 @@ const Footer = () => {
               <li><a href="#" className="footer-link">Conveyor Belt Repair Kits</a></li>
               <li><a href="#" className="footer-link">On-site Technical Support</a></li>
             </ul>
+            </div>
           </div>
 
           {/* Contact Info */}

@@ -229,6 +229,13 @@
   .social-links {
     justify-content: center;
   }
+  .footer-l{
+    display: none;
+    
+  }
+  .footer-section{
+    margin-bottom: -80x;
+  }
 }
 
 @media (max-width: 480px) {
