@@ -84,7 +84,7 @@
 .radial-menu {
   position: fixed;
   bottom: 120px;
-  right: 40px; /* Adjusted to move menu left */
+  right: 40px;
   width: 60px;
   height: 60px;
   z-index: 1001;
@@ -99,7 +99,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 54px; /* Slightly smaller */
+  width: 54px;
   height: 54px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.98);
@@ -114,13 +114,13 @@
   font-weight: 600;
   transform: translate(-50%, -50%) scale(0);
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   padding: 4px;
 }
 
-/* Adjusted positions for all items */
+/* Radial Menu Item Positions */
 .radial-menu.open .radial-menu-item:nth-child(1) {
   opacity: 1;
   transform: translate(-50%, -50%) translate(-50px, -40px) scale(1);
@@ -135,7 +135,7 @@
 }
 .radial-menu.open .radial-menu-item:nth-child(4) {
   opacity: 1;
-  transform: translate(-50%, -50%) translate(55px, -15px) scale(1); /* Adjusted position */
+  transform: translate(-50%, -50%) translate(55px, -15px) scale(1);
 }
 
 .radial-menu-item:hover {
@@ -167,7 +167,7 @@
   backdrop-filter: blur(4px);
   z-index: 1000;
   opacity: 1;
-  transition: opacity var(--transition-speed);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 /* ===== Desktop Navbar Styles ===== */
@@ -205,10 +205,7 @@
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  
 }
-
-
 
 /* Desktop Navigation */
 .navbar-nav {
@@ -256,50 +253,289 @@
   transform: translateX(-50%) scale(1);
 }
 
-/* ===== Responsive Styles ===== */
-@media (max-width: 768px) {
+/* ===== Responsive Breakpoints ===== */
+
+/* Large Desktop (1440px and above) */
+@media (min-width: 1440px) {
+  .navbar-container {
+    max-width: 1400px;
+    padding: 1.25rem 3rem;
+  }
+  
+  .navbar-nav {
+    gap: 2.5rem;
+    margin-right: 500px;
+  }
+  
+  .nav-link {
+    font-size: 1.1rem;
+  }
+  
+  .navbar-logo {
+    height: 55px;
+    width: 55px;
+  }
+}
+
+/* Standard Desktop (1024px to 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .navbar-container {
+    max-width: 1200px;
+    padding: 1rem 2rem;
+  }
+  
+  .navbar-nav {
+    gap: 2rem;
+    margin-right: 350px;
+  }
+}
+
+/* Small Desktop / Large Tablet Landscape (992px to 1023px) */
+@media (min-width: 992px) and (max-width: 1023px) {
+  .navbar-container {
+    max-width: 100%;
+    padding: 1rem 1.5rem;
+  }
+  
+  .navbar-nav {
+    gap: 1.5rem;
+    margin-right: 200px;
+  }
+  
+  .nav-link {
+    font-size: 0.95rem;
+  }
+  
+  .navbar-logo {
+    height: 45px;
+    width: 45px;
+  }
+}
+
+/* Tablet Landscape (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
   .navbar {
     display: none;
   }
-}
-
-@media (min-width: 769px) {
+  
   .mobile-nav-container {
-    display: none;
+    display: block;
   }
-}
-
-/* Accessibility Focus Styles */
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-/* Adjustments for very small screens */
-@media (max-width: 400px) {
+  
+  /* Adjust mobile elements for tablet */
+  .floating-menu-btn {
+    width: 65px;
+    height: 65px;
+    bottom: 40px;
+    right: 40px;
+  }
+  
+  .mobile-logo {
+    top: 25px;
+    left: 25px;
+    padding: 12px 18px;
+    font-size: 18px;
+  }
+  
+  .logo-mb {
+    width: 40px;
+    height: 40px;
+  }
+  
   .radial-menu {
     bottom: 130px;
-    right: 10px;
+    right: 45px;
   }
   
-  .radial-menu.open .radial-menu-item {
-    width: 50px;
-    height: 50px;
+  .radial-menu-item {
+    width: 58px;
+    height: 58px;
   }
   
+  .item-icon {
+    font-size: 20px;
+  }
+  
+  .item-text {
+    font-size: 10px;
+  }
+  
+  /* Adjust radial menu positions for tablet */
   .radial-menu.open .radial-menu-item:nth-child(1) {
-    transform: translate(-50%, -50%) translate(-45px, -35px) scale(1);
+    transform: translate(-50%, -50%) translate(-55px, -45px) scale(1);
   }
   .radial-menu.open .radial-menu-item:nth-child(2) {
-    transform: translate(-50%, -50%) translate(-5px, -65px) scale(1);
+    transform: translate(-50%, -50%) translate(-15px, -75px) scale(1);
   }
   .radial-menu.open .radial-menu-item:nth-child(3) {
-    transform: translate(-50%, -50%) translate(30px, -60px) scale(1);
+    transform: translate(-50%, -50%) translate(40px, -70px) scale(1);
   }
   .radial-menu.open .radial-menu-item:nth-child(4) {
-    transform: translate(-50%, -50%) translate(50px, -10px) scale(1);
+    transform: translate(-50%, -50%) translate(60px, -20px) scale(1);
+  }
+}
+
+/* Tablet Portrait (481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .navbar {
+    display: none;
+  }
+  
+  .mobile-nav-container {
+    display: block;
+  }
+  
+  .floating-menu-btn {
+    width: 60px;
+    height: 60px;
+    bottom: 35px;
+    right: 35px;
+  }
+  
+  .mobile-logo {
+    top: 22px;
+    left: 22px;
+    padding: 11px 16px;
+    font-size: 17px;
+  }
+  
+  .logo-mb {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .radial-menu {
+    bottom: 125px;
+    right: 42px;
+  }
+  
+  .radial-menu-item {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .item-icon {
+    font-size: 19px;
+  }
+  
+  .item-text {
+    font-size: 9px;
+  }
+  
+  /* Adjust radial menu positions */
+  .radial-menu.open .radial-menu-item:nth-child(1) {
+    transform: translate(-50%, -50%) translate(-52px, -42px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(2) {
+    transform: translate(-50%, -50%) translate(-12px, -72px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(3) {
+    transform: translate(-50%, -50%) translate(37px, -67px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(4) {
+    transform: translate(-50%, -50%) translate(57px, -17px) scale(1);
+  }
+}
+
+/* Large Mobile (376px to 480px) */
+@media (min-width: 376px) and (max-width: 480px) {
+  .navbar {
+    display: none;
+  }
+  
+  .mobile-nav-container {
+    display: block;
+  }
+  
+  .floating-menu-btn {
+    width: 58px;
+    height: 58px;
+    bottom: 30px;
+    right: 30px;
+  }
+  
+  .mobile-logo {
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+  
+  .logo-mb {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .radial-menu {
+    bottom: 120px;
+    right: 38px;
+  }
+  
+  .radial-menu-item {
+    width: 54px;
+    height: 54px;
+  }
+  
+  .item-icon {
+    font-size: 18px;
+  }
+  
+  .item-text {
+    font-size: 9px;
+  }
+  
+  /* Default positions (as in original) */
+  .radial-menu.open .radial-menu-item:nth-child(1) {
+    transform: translate(-50%, -50%) translate(-50px, -40px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(2) {
+    transform: translate(-50%, -50%) translate(-10px, -70px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(3) {
+    transform: translate(-50%, -50%) translate(35px, -65px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(4) {
+    transform: translate(-50%, -50%) translate(55px, -15px) scale(1);
+  }
+}
+
+/* Small Mobile (320px to 375px) */
+@media (min-width: 320px) and (max-width: 375px) {
+  .navbar {
+    display: none;
+  }
+  
+  .mobile-nav-container {
+    display: block;
+  }
+  
+  .floating-menu-btn {
+    width: 55px;
+    height: 55px;
+    bottom: 25px;
+    right: 25px;
+  }
+  
+  .mobile-logo {
+    top: 18px;
+    left: 18px;
+    padding: 9px 14px;
+    font-size: 15px;
+  }
+  
+  .logo-mb {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .radial-menu {
+    bottom: 110px;
+    right: 32px;
+  }
+  
+  .radial-menu-item {
+    width: 50px;
+    height: 50px;
   }
   
   .item-icon {
@@ -309,12 +545,148 @@ a:focus-visible {
   .item-text {
     font-size: 8px;
   }
-}
-/* In your Navbar.css */
-.radial-menu-item {
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  
+  /* Adjusted positions for smaller screens */
+  .radial-menu.open .radial-menu-item:nth-child(1) {
+    transform: translate(-50%, -50%) translate(-45px, -35px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(2) {
+    transform: translate(-50%, -50%) translate(-8px, -62px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(3) {
+    transform: translate(-50%, -50%) translate(30px, -58px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(4) {
+    transform: translate(-50%, -50%) translate(48px, -12px) scale(1);
+  }
 }
 
-.menu-backdrop {
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+/* Extra Small Mobile (below 320px) */
+@media (max-width: 319px) {
+  .navbar {
+    display: none;
+  }
+  
+  .mobile-nav-container {
+    display: block;
+  }
+  
+  .floating-menu-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .mobile-logo {
+    top: 15px;
+    left: 15px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .logo-mb {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .radial-menu {
+    bottom: 95px;
+    right: 27px;
+  }
+  
+  .radial-menu-item {
+    width: 46px;
+    height: 46px;
+  }
+  
+  .item-icon {
+    font-size: 14px;
+  }
+  
+  .item-text {
+    font-size: 7px;
+  }
+  
+  /* Compact positions for very small screens */
+  .radial-menu.open .radial-menu-item:nth-child(1) {
+    transform: translate(-50%, -50%) translate(-40px, -30px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(2) {
+    transform: translate(-50%, -50%) translate(-5px, -55px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(3) {
+    transform: translate(-50%, -50%) translate(25px, -52px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(4) {
+    transform: translate(-50%, -50%) translate(42px, -8px) scale(1);
+  }
+}
+
+/* ===== Accessibility and Focus Styles ===== */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Ensure proper touch targets on mobile */
+@media (max-width: 768px) {
+  .radial-menu-item {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .floating-menu-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .mobile-logo {
+    min-height: 44px;
+  }
+}
+
+/* High DPI / Retina Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .radial-menu-item {
+    border-width: 0.5px;
+  }
+  
+  .mobile-logo {
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .floating-menu-btn {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .mobile-logo {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .radial-menu {
+    bottom: 85px;
+    right: 25px;
+  }
+  
+  /* Adjust radial positions for landscape */
+  .radial-menu.open .radial-menu-item:nth-child(1) {
+    transform: translate(-50%, -50%) translate(-45px, -35px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(2) {
+    transform: translate(-50%, -50%) translate(-8px, -60px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(3) {
+    transform: translate(-50%, -50%) translate(30px, -58px) scale(1);
+  }
+  .radial-menu.open .radial-menu-item:nth-child(4) {
+    transform: translate(-50%, -50%) translate(48px, -12px) scale(1);
+  }
 }
