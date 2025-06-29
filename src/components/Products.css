@@ -815,8 +815,7 @@
   .filter-button1:nth-child(4),
   .filter-button1:nth-child(5) {
     flex: 1 0 calc(50% - 0.5rem);
-    background-color: #f0f9ff; /* Light blue background to highlight */
-    border-color: #bae6fd; /* Light blue border */
+  
   }
   
   /* Remaining filters (CLA, Rubber Products, Specialty) */
