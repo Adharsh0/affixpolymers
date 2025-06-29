@@ -92,7 +92,7 @@ const Products = () => {
       name: "CLA-90",
       category: "cla",
       description: "Cross linking agent",
-      features: ["inflammable", "NCO content:7.9%",],
+      features: ["inflammable", "NCO content:7.9%"],
       image: "/images/90.jpg",
       tds: "/tds/TDS CLA-90.pdf"
     },
