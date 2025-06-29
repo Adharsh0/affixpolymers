@@ -342,6 +342,9 @@
   .mission, .vision {
     padding: 15px;
   }
+  .subtitle1{
+    display: none;
+  }
 }
 
 @media (max-width: 400px) {
