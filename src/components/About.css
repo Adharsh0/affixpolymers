@@ -96,11 +96,11 @@
   transform: translateY(0);
 }
 
-.subtitle {
+.subtitle1 {
   font-family: 'Montserrat', sans-serif;
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 600;
-  color: #3b82f6;
+  color: #0046D2;
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;

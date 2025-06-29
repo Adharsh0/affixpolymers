@@ -25,7 +25,7 @@ const About = () => {
       <div className="about-container">
         {/* Left Text Content */}
         <div className={`about-text ${isVisible ? "animate-in" : ""}`}>
-          <div className="subtitle">About Our Company</div>
+          <div className="subtitle1">About Our Company</div>
           <h1 className="about-title">
             Innovating <span className="highlight">Polymer</span> Solutions
           </h1>
