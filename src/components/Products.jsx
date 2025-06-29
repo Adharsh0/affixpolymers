@@ -64,7 +64,7 @@ const Products = () => {
       id: 7,
       name: "Lagging Rubber Sheet Diamond",
       category: "rubber",
-      description: "Professional automotive assembly adhesive",
+      description: "",
       features: ["Vibration Resistant", "Heat Stable", "OEM Quality"],
       image: "/images/image1.jpg",
       
