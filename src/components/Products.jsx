@@ -9,7 +9,7 @@ const Products = () => {
     {
       id: 1,
       name: "AFFIX AP-320",
-      category: ["industrial","adhesives"],
+      category: ["industrial","adhesives","cvs"],
       description: "AFFIX AP-320 is specially manufactured solution used to bind M24 and general belt joint and pulley",
       features: ["Inflammable", "Excellent bonding in room temp"],
       image: "/images/affixap320-red.jpeg",
