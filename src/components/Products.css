@@ -791,3 +791,60 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a5b4fc;
 }
+/* Mobile Optimizations - No Scroll Version */
+@media (max-width: 767px) {
+  /* ... (keep all other existing mobile styles) ... */
+
+  /* Improved Filter Navigation - Multi-row Layout */
+  .filter-nav1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    width: calc(100% - 1rem);
+  }
+  
+  /* First 3 filters (All Products, Industrial, Adhesives) */
+  .filter-button1:nth-child(-n+3) {
+    flex: 1 0 calc(33.33% - 0.5rem);
+  }
+  
+  /* Next 2 filters (Cold Vulcanizing, Hot Vulcanizing) */
+  .filter-button1:nth-child(4),
+  .filter-button1:nth-child(5) {
+    flex: 1 0 calc(50% - 0.5rem);
+    background-color: #f0f9ff; /* Light blue background to highlight */
+    border-color: #bae6fd; /* Light blue border */
+  }
+  
+  /* Remaining filters (CLA, Rubber Products, Specialty) */
+  .filter-button1:nth-child(n+6) {
+    flex: 1 0 calc(33.33% - 0.5rem);
+  }
+  
+  .filter-button1 {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.7rem;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+/* Extra Small Mobile Devices (below 360px) */
+@media (max-width: 359px) {
+  .filter-button1 {
+    padding: 0.4rem 0.4rem;
+    font-size: 0.65rem;
+  }
+  
+  /* Make all filters single column on very small screens */
+  .filter-button1 {
+    flex: 1 0 100% !important;
+  }
+}
