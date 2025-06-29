@@ -46,7 +46,7 @@ const Products = () => {
       id: 5,
       name: " Insulation Compound AP-170",
       category: ["adhesives","hvs"],
-      description: "AP-270 HR and SHR,AP-370 SHR,UHR and FR grade belts,3 grade ",
+      description: "AP-270 HR and SHR,AP-370 SHR,UHR and FR grade belts",
       features: ["M24 grade belt"],
       image: "/images/insulation.jpg",
       
@@ -55,7 +55,7 @@ const Products = () => {
       id: 6,
       name: "Cover  Compound AP-170",
       category: ["adhesives","hvs"],
-      description: "AP-270,AP-370,3 grade ",
+      description: "AP-270,AP-370 ",
       features: ["M24 grade belt"],
       image: "/images/cover.jpg",
       
