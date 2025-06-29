@@ -4,7 +4,8 @@
   position: relative;
   overflow: hidden;
   padding: 2rem 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 30%, #e0e7ff 100%);
+  /* background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 30%, #e0e7ff 100%); */
+  background-color:#A1AFBF;
 }
 
 /* Background Elements */
