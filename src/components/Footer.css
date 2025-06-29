@@ -234,7 +234,7 @@
     
   }
   .footer-section{
-    margin-bottom: -80x;
+    margin-bottom: 1px;
   }
 }
 
@@ -267,4 +267,107 @@
 .uinetix-link:hover {
   text-decoration: underline;
   color: #2a6fc9;
+}
+/* ... (keep all your existing CSS above the media queries) ... */
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 0;
+    background-attachment: scroll;
+    background-position: top center;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .footer-subtitle {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .footer-description {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .social-links {
+    display: none; /* This hides the LinkedIn button in mobile */
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    text-align: left;
+    padding: 0 20px;
+  }
+
+  .footer-links li {
+    margin-bottom: 8px;
+  }
+
+  .footer-link {
+    font-size: 13px;
+  }
+
+  .contact-info {
+    gap: 8px;
+    padding: 0 20px;
+  }
+
+  .contact-item {
+    font-size: 13px;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .copyright {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .developed-by {
+    display: block;
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 0 16px;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .contact-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .contact-icon {
+    margin-bottom: 4px;
+  }
+
+  .footer-bottom {
+    padding: 16px 0;
+  }
 }
