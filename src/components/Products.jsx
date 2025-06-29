@@ -56,7 +56,7 @@ const Products = () => {
       name: "Cover  Compound AP-170",
       category: ["adhesives","hvs"],
       description: "AP-270,AP-370 ",
-      features: ["M24 grade belt"],
+      features: ["M24 grade belt","AP-270 HR and SHR","AP-370 SHR,UHR and FR","3 Grade"],
       image: "/images/cover.jpg",
       
     },
