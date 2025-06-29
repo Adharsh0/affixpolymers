@@ -63,7 +63,7 @@ const Products = () => {
     {
       id: 7,
       name: "Lagging Rubber Sheet Diamond",
-      category: "rubber",
+      category: ["rubber","industrial"],
       description: "",
       features: ["Vibration Resistant", "Heat Stable", "OEM Quality"],
       image: "/images/image1.jpg",
