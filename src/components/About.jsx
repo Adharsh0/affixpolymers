@@ -25,7 +25,7 @@ const About = () => {
       <div className="about-container">
         {/* Left Text Content */}
         <div className={`about-text ${isVisible ? "animate-in" : ""}`}>
-          <div className="subtitle1">About Our Company</div>
+          
           <h1 className="about-title">
             Innovating <span className="highlight">Polymer</span> Solutions
           </h1>
@@ -60,14 +60,7 @@ const About = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="scroll-indicator">
-        <div className="scroll-text">Scroll Down</div>
-        <div className="scroll-arrow">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-          </svg>
-        </div>
-      </div>
+     
     </section>
   );
 };
