@@ -22,7 +22,7 @@ const Products = () => {
       description: "AFFIX AP-340 is specially manufactured solution used to bind HR and SHR belt joint and pulley lagging et",
       features: ["inflammable", "UV Resistant", "peeling strength:5.5-7.6"],
       image: "/images/affixap-340.jpeg",
-      tds: "/tds/TDS AP-340.docx"
+      tds: "/tds/ap340.docx"
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ const Products = () => {
       description: "AFFIX AP-390 is specially manufactured solution used to bind SHR and UHR belt joint and pulley lagging",
       features: ["inflammable", "Excellent bonding in room"],
       image: "/images/ap-390n.jpeg",
-      tds: "/tds/TDS AP-390.docx"
+      tds: "/tds/ap390.docx"
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ const Products = () => {
       description: "AFFIX AP-390 sfr is specially manufactured fire retardant solution used to bind SHR and UHR belt joint and pulley lagging",
       features: ["non-flammable", "peeling strength:5.5-7.5",],
       image: "/images/affixap-390.jpg",
-      tds: "/tds/TDS AP-390 sfr.docx"
+      tds: "/tds/390sfr.docx"
     },
     {
       id: 5,
@@ -76,7 +76,7 @@ const Products = () => {
       description: "Cross linking agent",
       features: ["inflammable", "NCO content:7.2%",],
       image: "/images/20.jpg",
-      tds: "/tds/TDS CLA-20.pdf"
+      tds: "/tds/cla20.pdf"
     },
     {
       id: 9,
@@ -94,7 +94,7 @@ const Products = () => {
       description: "Cross linking agent",
       features: ["inflammable", "NCO content:7.9%"],
       image: "/images/90.jpg",
-      tds: "/tds/TDS CLA-90.pdf"
+      tds: "/tds/cla90.pdf"
     },
   ];
 
@@ -117,24 +117,59 @@ const Products = () => {
           : product.category === activeFilter
       );
 
-  const handleDownload = (e, product) => {
+  const handleDownload = async (e, product) => {
+    e.preventDefault();
+    
     if (!product.tds) {
-      e.preventDefault();
       alert('TDS not available for this product');
       return;
     }
 
-    // Ensure the file has the correct extension
-    const fileExtension = product.tds.split('.').pop();
-    const fileName = `${product.name.replace(/\s+/g, '_')}_TDS.${fileExtension}`;
+    try {
+      // Check if file exists first
+      const response = await fetch(product.tds, { method: 'HEAD' });
+      
+      if (!response.ok) {
+        alert('TDS file not found. Please contact support.');
+        return;
+      }
+
+      // Check if response is HTML (indicates server error)
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('text/html')) {
+        alert('TDS file not available. Please contact support.');
+        return;
+      }
+
+      // Proceed with download
+      const fileExtension = product.tds.split('.').pop();
+      const fileName = `${product.name.replace(/\s+/g, '_')}_TDS.${fileExtension}`;
+      
+      const link = document.createElement('a');
+      link.href = product.tds;
+      link.download = fileName;
+      link.target = '_blank'; // Open in new tab as fallback
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } catch (error) {
+      console.error('Download error:', error);
+      alert('Error downloading file. Please try again or contact support.');
+    }
+  };
+
+  // Alternative simpler download function for testing
+  const handleDownloadSimple = (e, product) => {
+    e.preventDefault();
     
-    // Create a temporary anchor tag for download
-    const link = document.createElement('a');
-    link.href = product.tds;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (!product.tds) {
+      alert('TDS not available for this product');
+      return;
+    }
+
+    // Open in new tab - this will show if file exists
+    window.open(product.tds, '_blank');
   };
 
   return (
@@ -214,8 +249,6 @@ const Products = () => {
                   />
                 </div>
                 
-                
-
                 <div className="image-glow1"></div>
               </div>
             </div>

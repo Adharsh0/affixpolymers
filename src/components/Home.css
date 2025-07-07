@@ -308,6 +308,7 @@
 @media (max-width: 480px) {
   .hero-content {
     padding: clamp(60px, 12vw, 80px) clamp(15px, 4vw, 20px) clamp(30px, 6vw, 40px);
+    margin-top: -50px;
   }
   
   .hero-title {
