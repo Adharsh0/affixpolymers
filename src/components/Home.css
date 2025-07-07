@@ -408,7 +408,7 @@
 /* Mobile Screens */
 @media (max-width: 480px) {
   .hero-content {
-    margin-top: -50px;
+   
     padding: 80px 18px 35px;
   }
   
