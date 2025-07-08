@@ -95,6 +95,7 @@ import bg4 from "../assets/bgg1.jpeg";
 import bg2 from "../assets/bgg2.jpeg";
 import bg1 from "../assets/bg4.jpeg";
 import { FiCheckCircle, FiAward, FiShield, FiPackage, FiClock, FiUsers } from "react-icons/fi";
+import { IconContext } from "react-icons";
 
 const Home = () => {
   const [typedText, setTypedText] = useState("");
@@ -216,10 +217,10 @@ const Home = () => {
                     
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <FiUsers size={28} />
+                        <FiCheckCircle size={28} />
                       </div>
-                      <span className="stat-number">10+</span>
-                      <span className="stat-label">Clients Served</span>
+                      <span className="stat-number">100%</span>
+                      <span className="stat-label">Quality</span>
                     </div>
                   </div>
                 </div>

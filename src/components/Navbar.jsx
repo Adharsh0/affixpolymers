@@ -121,17 +121,7 @@ const Navbar = () => {
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <div className="mobile-logo">
-            <img 
-              src={logoImage} 
-              alt="Affix Polymers Logo" 
-              className="logo-mb"
-              onClick={() => handleScroll('home')}
-              tabIndex="0"
-              onKeyDown={(e) => e.key === 'Enter' && handleScroll('home')}
-            />
-            Affix Polymers
-          </div>
+          
 
           <div 
             ref={menuRef}

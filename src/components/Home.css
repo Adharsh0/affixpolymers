@@ -454,7 +454,7 @@
   .hero-content {
     padding: 80px 20px 40px;
   }
-  
+ 
   .features-grid {
     overflow-x: auto;
     padding-bottom: 10px;
@@ -477,7 +477,8 @@
   .primary-btn,
   .secondary-btn {
     width: 100%;
-    max-width: 280px;
+    max-width: 150px;
+    margin-right: 15px;
   }
 }
 
@@ -487,4 +488,50 @@
     animation: none !important;
     transition: none !important;
   }
+}
+.brand-pop {
+  display: inline-block;
+  font-weight: 900;
+  font-size: clamp(36px, 8vw, 84px);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  opacity: 0;
+  transform: scale(0);
+  letter-spacing: -0.5em;
+  filter: blur(12px);
+  animation: materializeFromDot 1.2s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes materializeFromDot {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+    letter-spacing: -0.5em;
+    filter: blur(12px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.1);
+    letter-spacing: 0.1em;
+    filter: blur(6px);
+  }
+  70% {
+    transform: scale(0.98);
+    letter-spacing: 0.03em;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    letter-spacing: normal;
+    filter: blur(0);
+  }
+}
+
+.title-line-2 {
+  perspective: 800px;
 }
