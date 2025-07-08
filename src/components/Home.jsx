@@ -91,12 +91,10 @@
 // export default Home;
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-// Import your background images
 import bg4 from "../assets/bgg1.jpeg";
 import bg2 from "../assets/bgg2.jpeg";
-import bg3 from "../assets/bgg3.jpeg";
 import bg1 from "../assets/bg4.jpeg";
-
+import { FiCheckCircle, FiAward, FiShield, FiPackage, FiClock, FiUsers } from "react-icons/fi";
 
 const Home = () => {
   const [typedText, setTypedText] = useState("");
@@ -104,8 +102,13 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
-  // Background images array
-  const backgroundImages = [bg1, bg2,bg4];
+  const backgroundImages = [bg1, bg2, bg4];
+  const features = [
+    { icon: <FiCheckCircle size={24} />, text: "Quality Certified" },
+    { icon: <FiAward size={24} />, text: "Industry Leaders" },
+    { icon: <FiShield size={24} />, text: "Durable Solutions" },
+    { icon: <FiPackage size={24} />, text: "Wide Product Range" }
+  ];
 
   // Typing effect
   useEffect(() => {
@@ -124,18 +127,10 @@ const Home = () => {
       setCurrentBgIndex((prevIndex) => 
         (prevIndex + 1) % backgroundImages.length
       );
-    }, 5000); // Slower transition for more elegance
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
-
-  const handleContactClick = (e) => {
-    e.preventDefault();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className="home-section" id="home">
@@ -152,41 +147,69 @@ const Home = () => {
       
       {/* Professional Gradient Overlay */}
       <div className="hero-overlay"></div>
+      
       <div className="hero-content">
         <div className="hero-inner">
           <div className="hero-text">
             <div className="text-content">
               {/* Enhanced Subtitle with Icon */}
               <div className="subtitle-container">
+                <div className="pre-title-badge">
+                  <span>Since 1993</span>
+                  <div className="divider-line"></div>
+                  <FiCheckCircle className="verified-icon" />
+                </div>
               </div>
+              
               <h1 className="hero-title">
                 <span className="title-line-1">Welcome To</span>
                 <span className="title-line-2">
                   <span className="brand-name">
                     {typedText}
+                    {currentIndex === fullText.length && (
+                      <span className="cursor-animation">|</span>
+                    )}
                   </span>
                 </span>
               </h1>
+              
               {/* Enhanced Subtitle */}
               <div className="hero-subtitle-container">
                 <p className="hero-subtitle">
                   <span className="highlight-text">Your Trustfull Solutions</span>
-                
+                  <span className="description-text">
+                    Premium polymer compounds manufacturer with 30+ years of expertise in formulation and production
+                  </span>
                 </p>
+              </div>
+
+              {/* Features Grid */}
+              <div className="features-grid">
+                {features.map((feature, index) => (
+                  <div key={index} className="feature-item">
+                    <div className="feature-icon">{feature.icon}</div>
+                    <span>{feature.text}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Enhanced CTA Section */}
               <div className="cta-section">
+                <div className="cta-buttons">
+                  <a href="#products" className="primary-btn">
+                    Explore Products
+                  </a>
+                  <a href="#contact" className="secondary-btn">
+                    Request Quote
+                  </a>
+                </div>
+                
                 {/* Enhanced Stats Section */}
                 <div className="stats-container">
                   <div className="stats-section">
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <path d="M20 7L12 3L4 7L12 11L20 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M4 12L12 16L20 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M4 17L12 21L20 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                        <FiPackage size={28} />
                       </div>
                       <span className="stat-number">10+</span>
                       <span className="stat-label">Products</span>
@@ -194,10 +217,7 @@ const Home = () => {
                     
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                          <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                        <FiClock size={28} />
                       </div>
                       <span className="stat-number">30+</span>
                       <span className="stat-label">Years Experience</span>
@@ -205,13 +225,10 @@ const Home = () => {
                     
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                          <path d="M9 12L11 14L15 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
-                        </svg>
+                        <FiUsers size={28} />
                       </div>
-                      <span className="stat-number">100%</span>
-                      <span className="stat-label">Quality</span>
+                      <span className="stat-number">10+</span>
+                      <span className="stat-label">Clients Served</span>
                     </div>
                   </div>
                 </div>
@@ -220,8 +237,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
+      
     </section>
   );
 };
