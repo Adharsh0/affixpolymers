@@ -151,16 +151,7 @@ const Home = () => {
       <div className="hero-content">
         <div className="hero-inner">
           <div className="hero-text">
-            <div className="text-content">
-              {/* Enhanced Subtitle with Icon */}
-              <div className="subtitle-container">
-                <div className="pre-title-badge">
-                  <span>Since 1993</span>
-                  <div className="divider-line"></div>
-                  <FiCheckCircle className="verified-icon" />
-                </div>
-              </div>
-              
+            <div className="text-content"> 
               <h1 className="hero-title">
                 <span className="title-line-1">Welcome To</span>
                 <span className="title-line-2">
