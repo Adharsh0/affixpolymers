@@ -1,100 +1,9 @@
-// import React, { useState, useEffect } from "react";
-// import Navbar from "./Navbar";
-// import "./Home.css";
-// import heroImage from "../assets/removedbg.png"; // Update with your image path
-
-// const Home = () => {
-//   const [typedText, setTypedText] = useState("");
-//   const fullText = "Affix Polymers";
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   useEffect(() => {
-//     if (currentIndex < fullText.length) {
-//       const timeout = setTimeout(() => {
-//         setTypedText((prev) => prev + fullText[currentIndex]);
-//         setCurrentIndex((prev) => prev + 1);
-//       }, 120);
-//       return () => clearTimeout(timeout);
-//     }
-//   }, [currentIndex]);
-
-//   const handleContactClick = (e) => {
-//     e.preventDefault();
-//     const contactSection = document.getElementById('contact');
-//     if (contactSection) {
-//       contactSection.scrollIntoView({ behavior: 'smooth' });
-//     }
-//   };
-
-//   return (
-//     <section className="home-section" id="home">
-//       <div className="hero-overlay"></div>
-//       <Navbar />
-//       <div className="hero-content">
-//         <div className="hero-inner">
-//           {/* Left Text */}
-//           <div className="hero-text">
-//             <div className="text-content">
-//               <div className="subtitle">Premium Quality Solutions</div>
-//               <h1 className="hero-title">
-//                 Welcome to <br />
-//                 <span className="brand-name">{typedText}</span>
-//               </h1>
-//               <p className="hero-subtitle">
-//                 <strong>YOUR TRUSTFUL SOLUTION.</strong>
-//                 <br />
-//                 Innovative polymer solutions for demanding industrial applications
-//               </p>
-//               <div className="cta-section">
-//                 <button onClick={handleContactClick} className="discover-btn">
-//                   Contact Now
-//                   <div className="btn-icon">
-//                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-//                       <path
-//                         d="M5 12H19M19 12L12 5M19 12L12 19"
-//                         stroke="currentColor"
-//                         strokeWidth="2"
-//                         strokeLinecap="round"
-//                         strokeLinejoin="round"
-//                       />
-//                     </svg>
-//                   </div>
-//                 </button>
-//                 <div className="stats-section">
-//                   <div className="stat-item">
-//                     <span className="stat-number">10+</span>
-//                     <span className="stat-label">Products</span>
-//                   </div>
-//                   <div className="stat-item">
-//                     <span className="stat-number">30+</span>
-//                     <span className="stat-label">Experience</span>
-//                   </div>
-//                   <div className="stat-item">
-//                     <span className="stat-number">100%</span>
-//                     <span className="stat-label">Quality</span>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Right Image */}
-//           <div className="hero-image-wrapper">
-//             <img src={heroImage} alt="Affix Polymers" className="hero-image" />
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Home;
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import bg4 from "../assets/bgg1.jpeg";
 import bg2 from "../assets/bgg2.jpeg";
 import bg1 from "../assets/bg4.jpeg";
-import { FiCheckCircle, FiAward, FiShield, FiPackage, FiClock, FiUsers } from "react-icons/fi";
+import { FiCheckCircle, FiAward, FiShield, FiPackage, FiClock } from "react-icons/fi";
 import { IconContext } from "react-icons";
 
 const Home = () => {
@@ -102,13 +11,14 @@ const Home = () => {
   const fullText = "Affix Polymers";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const featuresGridRef = useRef(null);
 
   const backgroundImages = [bg1, bg2, bg4];
   const features = [
-    { icon: <FiCheckCircle size={24} />, text: "Quality Certified" },
-    { icon: <FiAward size={24} />, text: "Industry Leaders" },
-    { icon: <FiShield size={24} />, text: "Durable Solutions" },
-    { icon: <FiPackage size={24} />, text: "Wide Product Range" }
+    { icon: <FiCheckCircle />, text: "Quality Certified" },
+    { icon: <FiAward />, text: "Industry Leaders" },
+    { icon: <FiShield />, text: "Durable Solutions" },
+    { icon: <FiPackage />, text: "Wide Product Range" }
   ];
 
   // Typing effect
@@ -132,6 +42,46 @@ const Home = () => {
 
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
+
+  // Touch handling for mobile scrolling (manual)
+  useEffect(() => {
+    const featuresGrid = featuresGridRef.current;
+    if (!featuresGrid) return;
+
+    let startX;
+    let scrollLeft;
+    let isDragging = false;
+
+    const handleTouchStart = (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX - featuresGrid.offsetLeft;
+      scrollLeft = featuresGrid.scrollLeft;
+      featuresGrid.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
+    };
+
+    const handleTouchMove = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - featuresGrid.offsetLeft;
+      const walk = (x - startX) * 1.5; // Adjust scroll speed
+      featuresGrid.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleTouchEnd = () => {
+      isDragging = false;
+      featuresGrid.style.scrollBehavior = 'smooth'; // Re-enable smooth scroll
+    };
+
+    featuresGrid.addEventListener('touchstart', handleTouchStart);
+    featuresGrid.addEventListener('touchmove', handleTouchMove, { passive: false });
+    featuresGrid.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      featuresGrid.removeEventListener('touchstart', handleTouchStart);
+      featuresGrid.removeEventListener('touchmove', handleTouchMove);
+      featuresGrid.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
 
   return (
     <section className="home-section" id="home">
@@ -175,14 +125,16 @@ const Home = () => {
                 </p>
               </div>
 
-              {/* Features Grid */}
-              <div className="features-grid">
-                {features.map((feature, index) => (
-                  <div key={index} className="feature-item">
-                    <div className="feature-icon">{feature.icon}</div>
-                    <span>{feature.text}</span>
-                  </div>
-                ))}
+              {/* Features Grid with manual mobile scrolling */}
+              <div className="features-grid" ref={featuresGridRef}>
+                <IconContext.Provider value={{ className: "feature-icon", size: "24px" }}>
+                  {features.map((feature, index) => (
+                    <div key={index} className="feature-item">
+                      {feature.icon}
+                      <span>{feature.text}</span>
+                    </div>
+                  ))}
+                </IconContext.Provider>
               </div>
 
               {/* Enhanced CTA Section */}
@@ -201,7 +153,7 @@ const Home = () => {
                   <div className="stats-section">
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <FiPackage size={28} />
+                        <FiPackage />
                       </div>
                       <span className="stat-number">10+</span>
                       <span className="stat-label">Products</span>
@@ -209,7 +161,7 @@ const Home = () => {
                     
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <FiClock size={28} />
+                        <FiClock />
                       </div>
                       <span className="stat-number">30+</span>
                       <span className="stat-label">Years Experience</span>
@@ -217,7 +169,7 @@ const Home = () => {
                     
                     <div className="stat-item">
                       <div className="stat-icon">
-                        <FiCheckCircle size={28} />
+                        <FiCheckCircle />
                       </div>
                       <span className="stat-number">100%</span>
                       <span className="stat-label">Quality</span>
@@ -229,7 +181,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      
     </section>
   );
 };
