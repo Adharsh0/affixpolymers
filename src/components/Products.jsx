@@ -72,7 +72,7 @@ const Products = () => {
       image: "/images/affixap-390.jpg",
       tds: "/tds/390sfr.docx",
       specs: { strength: "Ultra High", temp: "High Temp", grade: "Fire Retardant" },
-      price: "Premium Pricing",
+      price: "Contact for Quote",
       applications: ["Fire Safety Systems", "High Temperature", "Safety Critical"]
     },
     {
@@ -83,7 +83,7 @@ const Products = () => {
       features: ["M24 grade belt","AP-270 HR and SHR","AP-370 SHR,UHR and FR","3 Grade"],
       image: "/images/insulation.jpg",
       specs: { strength: "Variable", temp: "High Temp", grade: "Multi-Grade" },
-      price: "Competitive Rates",
+      price: "Contact for Quote",
       applications: ["Electrical Insulation", "Thermal Barriers", "Multi-Grade Systems"]
     },
     {
@@ -94,7 +94,7 @@ const Products = () => {
       features: ["M24 grade belt","AP-270 HR and SHR","AP-370 SHR,UHR and FR","3 Grade"],
       image: "/images/cover.jpg",
       specs: { strength: "Variable", temp: "High Temp", grade: "Multi-Grade" },
-      price: "Competitive Rates",
+      price: "Contact for Quote",
       applications: ["Surface Protection", "Environmental Barriers", "Protective Coatings"]
     },
     {
@@ -105,7 +105,7 @@ const Products = () => {
       features: ["Vibration Resistant", "Heat Stable", "OEM Quality"],
       image: "/images/image1.jpg",
       specs: { strength: "High", temp: "Heat Stable", grade: "Diamond Pattern" },
-      price: "Standard Pricing",
+      price: "Contact for Quote",
       applications: ["Conveyor Systems", "Grip Enhancement", "Industrial Flooring"]
     },
     {
@@ -117,7 +117,7 @@ const Products = () => {
       image: "/images/20.jpg",
       tds: "/tds/cla20.pdf",
       specs: { strength: "Standard", temp: "Ambient", grade: "7.2% NCO" },
-      price: "Standard Pricing",
+      price: "Contact for Quote",
       applications: ["Chemical Bonding", "Cross-Linking", "Adhesive Enhancement"]
     },
     {
@@ -129,7 +129,7 @@ const Products = () => {
       image: "/images/40.jpg",
       tds: "/tds/TDS CLA-40.pdf",
       specs: { strength: "Medium", temp: "Ambient", grade: "7.5% NCO" },
-      price: "Standard Pricing",
+      price: "Contact for Quote",
       applications: ["Enhanced Bonding", "Chemical Processing", "Industrial Applications"]
     },
     {
@@ -141,7 +141,7 @@ const Products = () => {
       image: "/images/90.jpg",
       tds: "/tds/cla90.pdf",
       specs: { strength: "High", temp: "Ambient", grade: "7.9% NCO" },
-      price: "Premium Pricing",
+      price: "Contact for Quote",
       applications: ["High Performance", "Specialized Bonding", "Critical Applications"]
     },
   ];
