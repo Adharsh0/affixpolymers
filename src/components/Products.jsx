@@ -23,8 +23,9 @@ const Products = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
 
-  // Complete products array
+  // Complete products array (keeping your existing products)
   const products = [
     {
       id: 1,
@@ -168,18 +169,23 @@ const Products = () => {
     return matchesCategory && matchesSearch;
   });
 
-  // Email configuration - Update these with your details
+  // Email configuration
   const EMAIL_CONFIG = {
-    to: 'affixpolymers@gmail.com', // Replace with your company email
+    to: 'affixpolymers@gmail.com',
     subject: 'Product Quote Request - ',
-    cc: '', // Optional CC email
-    bcc: '' // Optional BCC email
+    cc: '',
+    bcc: ''
   };
 
-  // Function to handle quote request
-  const handleQuoteRequest = (product) => {
-    const subject = `${EMAIL_CONFIG.subject}${product.name}`;
-    const body = `Dear Team,
+  // Enhanced mobile-compatible email handler
+  const handleEmailRequest = (product, type = 'quote') => {
+    setIsEmailLoading(true);
+
+    let subject, body;
+
+    if (type === 'quote') {
+      subject = `${EMAIL_CONFIG.subject}${product.name}`;
+      body = `Dear Team,
 
 I would like to request a quote for the following product:
 
@@ -211,27 +217,9 @@ Best regards,
 [Your Name]
 [Your Company]
 [Your Contact Information]`;
-
-    // Construct Gmail URL
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Optional: Add CC and BCC if provided
-    let finalUrl = gmailUrl;
-    if (EMAIL_CONFIG.cc) {
-      finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
-    }
-    if (EMAIL_CONFIG.bcc) {
-      finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
-    }
-
-    // Open Gmail in new tab
-    window.open(finalUrl, '_blank');
-  };
-
-  // Function to handle technical support contact
-  const handleTechnicalSupport = (product) => {
-    const subject = `Technical Support Request - ${product.name}`;
-    const body = `Dear Technical Support Team,
+    } else {
+      subject = `Technical Support Request - ${product.name}`;
+      body = `Dear Technical Support Team,
 
 I need technical assistance regarding the following product:
 
@@ -256,9 +244,70 @@ Best regards,
 [Your Name]
 [Your Company]
 [Your Contact Information]`;
+    }
 
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.open(gmailUrl, '_blank');
+    try {
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      
+      if (isMobile) {
+        // Mobile devices: Use mailto directly
+        const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoUrl;
+        
+        // Show success message after a brief delay
+        setTimeout(() => {
+          setIsEmailLoading(false);
+        }, 1500);
+        
+      } else {
+        // Desktop: Try Gmail first, fallback to mailto
+        try {
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          
+          // Add CC and BCC if provided
+          let finalUrl = gmailUrl;
+          if (EMAIL_CONFIG.cc) {
+            finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
+          }
+          if (EMAIL_CONFIG.bcc) {
+            finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
+          }
+
+          const newWindow = window.open(finalUrl, '_blank');
+          
+          // If popup blocked or failed, use mailto
+          if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+          }
+          
+          setIsEmailLoading(false);
+          
+        } catch (error) {
+          // Fallback to mailto for desktop
+          const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = mailtoUrl;
+          setIsEmailLoading(false);
+        }
+      }
+    } catch (error) {
+      console.error('Email error:', error);
+      setIsEmailLoading(false);
+      
+      // Final fallback - show alert with email details
+      alert(`Please send an email to: ${EMAIL_CONFIG.to}\n\nSubject: ${subject}\n\nOr copy the email address and compose manually.`);
+    }
+  };
+
+  // Function to handle quote request
+  const handleQuoteRequest = (product) => {
+    handleEmailRequest(product, 'quote');
+  };
+
+  // Function to handle technical support contact
+  const handleTechnicalSupport = (product) => {
+    handleEmailRequest(product, 'support');
   };
 
   const handleDownload = async (e, product) => {
@@ -413,7 +462,7 @@ Best regards,
         </div>
       </div>
 
-      {/* Enhanced Product Modal with Email Integration */}
+      {/* Enhanced Product Modal with Mobile-Compatible Email Integration */}
       {selectedProduct && (
         <div className="product-modal-overlay" onClick={() => setSelectedProduct(null)}>
           <div className="product-modal" onClick={(e) => e.stopPropagation()}>
@@ -486,7 +535,7 @@ Best regards,
                   </div>
                 </div>
 
-                {/* Enhanced Modal Actions with Email Integration */}
+                {/* Enhanced Modal Actions with Mobile-Compatible Email Integration */}
                 <div className="modal-actions">
                   {selectedProduct.tds && (
                     <button
@@ -497,16 +546,20 @@ Best regards,
                     </button>
                   )}
                   <button 
-                    className="secondary-btn quote-btn"
+                    className={`secondary-btn quote-btn ${isEmailLoading ? 'loading' : ''}`}
                     onClick={() => handleQuoteRequest(selectedProduct)}
+                    disabled={isEmailLoading}
                   >
-                    <FontAwesomeIcon icon={faEnvelope} /> Request Quote via Email
+                    <FontAwesomeIcon icon={faEnvelope} /> 
+                    {isEmailLoading ? ' Opening Email...' : ' Request Quote via Email'}
                   </button>
                   <button 
-                    className="secondary-btn support-btn"
+                    className={`secondary-btn support-btn ${isEmailLoading ? 'loading' : ''}`}
                     onClick={() => handleTechnicalSupport(selectedProduct)}
+                    disabled={isEmailLoading}
                   >
-                    <FontAwesomeIcon icon={faPhone} /> Contact Technical Support
+                    <FontAwesomeIcon icon={faPhone} /> 
+                    {isEmailLoading ? ' Opening Email...' : ' Contact Technical Support'}
                   </button>
                 </div>
               </div>
