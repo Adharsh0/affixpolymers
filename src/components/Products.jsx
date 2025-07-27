@@ -1,9 +1,28 @@
 import React, { useState } from "react";
-import './Products.css'; // Import the CSS file
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faBolt, 
+  faIndustry, 
+  faLink, 
+  faSnowflake, 
+  faFire, 
+  faFlask, 
+  faCircle, 
+  faStar,
+  faSearch,
+  faFileAlt,
+  faInfoCircle,
+  faTimes,
+  faPhone,
+  faEnvelope,
+  faCheck
+} from '@fortawesome/free-solid-svg-icons';
+import './Products.css';
 
 const Products = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const products = [
     {
@@ -13,16 +32,22 @@ const Products = () => {
       description: "AFFIX AP-320 is specially manufactured solution used to bind M24 and general belt joint and pulley",
       features: ["Inflammable", "Excellent bonding in room temp"],
       image: "/images/affixap320-red.jpeg",
-      tds: "/tds/TDS AP - 320.pdf"
+      tds: "/tds/TDS AP - 320.pdf",
+      specs: { strength: "Standard", temp: "Room Temp", grade: "M24" },
+      price: "Contact for Quote",
+      applications: ["Belt Joints", "Pulley Systems", "Industrial Bonding"]
     },
     {
       id: 2,
       name: "AFFIX AP-340",
       category: ["industrial","adhesives","cvs"],
-      description: "AFFIX AP-340 is specially manufactured solution used to bind HR and SHR belt joint and pulley lagging et",
+      description: "AFFIX AP-340 is specially manufactured solution used to bind HR and SHR belt joint and pulley lagging",
       features: ["inflammable", "UV Resistant", "peeling strength:5.5-7.6"],
       image: "/images/affixap-340.jpeg",
-      tds: "/tds/ap340.docx"
+      tds: "/tds/ap340.docx",
+      specs: { strength: "Medium", temp: "Variable", grade: "HR/SHR" },
+      price: "Contact for Quote",
+      applications: ["HR Belt Systems", "Lagging Applications", "UV Exposed Areas"]
     },
     {
       id: 3,
@@ -31,235 +56,396 @@ const Products = () => {
       description: "AFFIX AP-390 is specially manufactured solution used to bind SHR and UHR belt joint and pulley lagging",
       features: ["inflammable", "Excellent bonding in room"],
       image: "/images/ap-390n.jpeg",
-      tds: "/tds/ap390.docx"
+      tds: "/tds/ap390.docx",
+      specs: { strength: "High", temp: "Room Temp", grade: "SHR/UHR" },
+      price: "Contact for Quote",
+      applications: ["Heavy Duty Belts", "High Performance Systems", "UHR Applications"]
     },
     {
       id: 4,
       name: "AFFIX AP-390 SFR",
       category: ["industrial","specialty","cvs"],
       description: "AFFIX AP-390 sfr is specially manufactured fire retardant solution used to bind SHR and UHR belt joint and pulley lagging",
-      features: ["non-flammable", "peeling strength:5.5-7.5",],
+      features: ["non-flammable", "peeling strength:5.5-7.5"],
       image: "/images/affixap-390.jpg",
-      tds: "/tds/390sfr.docx"
+      tds: "/tds/390sfr.docx",
+      specs: { strength: "Ultra High", temp: "High Temp", grade: "Fire Retardant" },
+      price: "Premium Pricing",
+      applications: ["Fire Safety Systems", "High Temperature", "Safety Critical"]
     },
     {
       id: 5,
-      name: " Insulation Compound AP-170",
+      name: "Insulation Compound AP-170",
       category: ["adhesives","hvs"],
-      description: "",
+      description: "High-performance insulation compound for industrial applications",
       features: ["M24 grade belt","AP-270 HR and SHR","AP-370 SHR,UHR and FR","3 Grade"],
       image: "/images/insulation.jpg",
-      
+      specs: { strength: "Variable", temp: "High Temp", grade: "Multi-Grade" },
+      price: "Competitive Rates",
+      applications: ["Electrical Insulation", "Thermal Barriers", "Multi-Grade Systems"]
     },
     {
       id: 6,
-      name: "Cover  Compound AP-170",
+      name: "Cover Compound AP-170",
       category: ["adhesives","hvs"],
-      description: "",
+      description: "Protective cover compound designed for demanding environments",
       features: ["M24 grade belt","AP-270 HR and SHR","AP-370 SHR,UHR and FR","3 Grade"],
       image: "/images/cover.jpg",
-      
+      specs: { strength: "Variable", temp: "High Temp", grade: "Multi-Grade" },
+      price: "Competitive Rates",
+      applications: ["Surface Protection", "Environmental Barriers", "Protective Coatings"]
     },
     {
       id: 7,
       name: "Lagging Rubber Sheet Diamond",
       category: ["rubber","industrial"],
-      description: "",
+      description: "Premium diamond-pattern lagging rubber sheet for superior grip",
       features: ["Vibration Resistant", "Heat Stable", "OEM Quality"],
       image: "/images/image1.jpg",
-      
+      specs: { strength: "High", temp: "Heat Stable", grade: "Diamond Pattern" },
+      price: "Standard Pricing",
+      applications: ["Conveyor Systems", "Grip Enhancement", "Industrial Flooring"]
     },
     {
       id: 8,
       name: "CLA-20",
       category: "cla",
-      description: "Cross linking agent",
-      features: ["inflammable", "NCO content:7.2%",],
+      description: "Cross linking agent for enhanced bonding performance",
+      features: ["inflammable", "NCO content:7.2%"],
       image: "/images/20.jpg",
-      tds: "/tds/cla20.pdf"
+      tds: "/tds/cla20.pdf",
+      specs: { strength: "Standard", temp: "Ambient", grade: "7.2% NCO" },
+      price: "Standard Pricing",
+      applications: ["Chemical Bonding", "Cross-Linking", "Adhesive Enhancement"]
     },
     {
       id: 9,
       name: "CLA-40",
       category: "cla",
-      description: "Cross linking agent",
-      features: ["inflammable", "NCO content:7.5%",],
+      description: "Cross linking agent with superior chemical properties",
+      features: ["inflammable", "NCO content:7.5%"],
       image: "/images/40.jpg",
-      tds: "/tds/TDS CLA-40.pdf"
+      tds: "/tds/TDS CLA-40.pdf",
+      specs: { strength: "Medium", temp: "Ambient", grade: "7.5% NCO" },
+      price: "Standard Pricing",
+      applications: ["Enhanced Bonding", "Chemical Processing", "Industrial Applications"]
     },
     {
       id: 10,
       name: "CLA-90",
       category: "cla",
-      description: "Cross linking agent",
+      description: "High-performance cross linking agent for industrial use",
       features: ["inflammable", "NCO content:7.9%"],
       image: "/images/90.jpg",
-      tds: "/tds/cla90.pdf"
+      tds: "/tds/cla90.pdf",
+      specs: { strength: "High", temp: "Ambient", grade: "7.9% NCO" },
+      price: "Premium Pricing",
+      applications: ["High Performance", "Specialized Bonding", "Critical Applications"]
     },
   ];
 
   const categories = [
-    { key: 'all', label: 'All Products' },
-    { key: 'industrial', label: 'Industrial' },
-    { key: 'adhesives', label: 'Adhesives' },
-    { key: 'cvs', label: 'Cold Vulcanizing Solution' },
-    { key: 'hvs', label: 'Hot Vulcanizing Solution' },
-    { key: 'cla', label: 'CLA' },
-    { key: 'rubber', label: 'Rubber Products' },
-    { key: 'specialty', label: 'Specialty' },
+    { key: 'all', label: 'All Products', icon: faBolt },
+    { key: 'industrial', label: 'Industrial Solutions', icon: faIndustry },
+    { key: 'adhesives', label: 'Adhesive Systems', icon: faLink },
+    { key: 'cvs', label: 'Cold Vulcanizing', icon: faSnowflake },
+    { key: 'hvs', label: 'Hot Vulcanizing', icon: faFire },
+    { key: 'cla', label: 'Cross Linking Agents', icon: faFlask },
+    { key: 'rubber', label: 'Rubber Products', icon: faCircle },
+    { key: 'specialty', label: 'Specialty Products', icon: faStar },
   ];
 
-  const filteredProducts = activeFilter === 'all'
-    ? products
-    : products.filter(product =>
-        Array.isArray(product.category)
-          ? product.category.includes(activeFilter)
-          : product.category === activeFilter
-      );
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = activeFilter === 'all' || 
+      (Array.isArray(product.category) 
+        ? product.category.includes(activeFilter)
+        : product.category === activeFilter);
+    
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return matchesCategory && matchesSearch;
+  });
 
   const handleDownload = async (e, product) => {
     e.preventDefault();
+    e.stopPropagation();
     
     if (!product.tds) {
-      alert('TDS not available for this product');
+      alert('Technical Data Sheet not available for this product');
       return;
     }
 
     try {
-      // Check if file exists first
       const response = await fetch(product.tds, { method: 'HEAD' });
       
       if (!response.ok) {
-        alert('TDS file not found. Please contact support.');
+        alert('TDS file not found. Please contact our support team.');
         return;
       }
 
-      // Check if response is HTML (indicates server error)
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('text/html')) {
-        alert('TDS file not available. Please contact support.');
-        return;
-      }
-
-      // Proceed with download
       const fileExtension = product.tds.split('.').pop();
       const fileName = `${product.name.replace(/\s+/g, '_')}_TDS.${fileExtension}`;
       
       const link = document.createElement('a');
       link.href = product.tds;
       link.download = fileName;
-      link.target = '_blank'; // Open in new tab as fallback
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       
     } catch (error) {
       console.error('Download error:', error);
-      alert('Error downloading file. Please try again or contact support.');
+      alert('Error downloading file. Please try again or contact our support team.');
     }
-  };
-
-  // Alternative simpler download function for testing
-  const handleDownloadSimple = (e, product) => {
-    e.preventDefault();
-    
-    if (!product.tds) {
-      alert('TDS not available for this product');
-      return;
-    }
-
-    // Open in new tab - this will show if file exists
-    window.open(product.tds, '_blank');
   };
 
   return (
-    <section className="products-container1" id="products">
-      <div className="background-elements1">
-        <div className="bg-element-11"></div>
-        <div className="bg-element-21"></div>
-        <div className="bg-element-31"></div>
+    <section className="products-showcase" id="products">
+      {/* Header Section */}
+      <div className="showcase-header">
+        <div className="header-content">
+          <div className="header-text">
+            <span className="section-badge">Product List</span>
+            <h1 className="main-title">Industrial Chemical Solutions</h1>
+            <p className="main-subtitle">
+              Discover our comprehensive range of high-performance adhesives, compounds, 
+              and specialty chemicals engineered for industrial excellence.
+            </p>
+          </div>
+          
+          {/* Search and Filter Controls */}
+          <div className="controls-section">
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+              <div className="search-icon">
+                <FontAwesomeIcon icon={faSearch} />
+              </div>
+            </div>
+            
+            <div className="category-tabs">
+              {categories.map((category) => (
+                <button
+                  key={category.key}
+                  className={`category-tab ${activeFilter === category.key ? 'active' : ''}`}
+                  onClick={() => setActiveFilter(category.key)}
+                >
+                  <span className="tab-icon">
+                    <FontAwesomeIcon icon={category.icon} />
+                  </span>
+                  <span className="tab-label">{category.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="products-content1">
-        <div className="products-header1">
-          <div className="header-decoration1">
-            <div className="decoration-line1"></div>
-            Our Product Range
-            <div className="decoration-line1"></div>
-          </div>
-          <h2 className="header-title1">Premium Quality Solutions</h2>
-        </div>
-
-        <div className="filter-nav1">
-          {categories.map((category) => (
-            <button
-              key={category.key}
-              className={`filter-button1 ${activeFilter === category.key ? 'active1' : ''}`}
-              onClick={() => setActiveFilter(category.key)}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="products-grid1">
+      {/* Products Grid */}
+      <div className="products-grid">
+        <div className="grid-container">
           {filteredProducts.map((product, index) => (
-            <div 
-              key={product.id} 
-              className={`product-card1 ${index % 2 === 0 ? 'left-image1' : 'right-image1'} ${hoveredProduct === product.id ? 'hovered1' : ''}`}
-              onMouseEnter={() => setHoveredProduct(product.id)}
-              onMouseLeave={() => setHoveredProduct(null)}
+            <div
+              key={product.id}
+              className="product-card"
+              onClick={() => setSelectedProduct(product)}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="product-info1">
-                <div className="product-text1">
-                  <h3 className="product-name1">{product.name}</h3>
-                  <p className="product-description1">{product.description}</p>
-                </div>
-                
-                <div className="product-features1">
-                  {product.features.map((feature, idx) => (
-                    <span key={idx} className="feature-tag1">{feature}</span>
-                  ))}
-                </div>
-                
-                <div className="product-actions1">
-                  {product.tds && (
-                    <button 
-                      onClick={(e) => handleDownload(e, product)}
-                      className="download-button1"
-                    >
-                      <svg className="button-icon1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      Download TDS
-                    </button>
-                  )}
-                </div>
-              </div>
-              
-              <div className="product-image-container1">
-                <div className="image-wrapper1">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="product-image1"
+              <div className="card-header">
+                <div className="product-image">
+                  <img
+                    src={product.image}
+                    alt={product.name}
                     onError={(e) => {
-                      e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='%2364748b' text-anchor='middle' dy='.3em'%3EProduct Image%3C/text%3E%3C/svg%3E";
+                      e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160' viewBox='0 0 200 160'%3E%3Crect width='200' height='160' fill='%23f1f5f9' stroke='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='%23687280' text-anchor='middle' dy='.3em'%3EProduct Image%3C/text%3E%3C/svg%3E";
                     }}
                   />
+                 
                 </div>
                 
-                <div className="image-glow1"></div>
+                <div className="card-badge">
+                  <span className="product-id">#{String(product.id).padStart(3, '0')}</span>
+                  <span className="product-category">
+                    {Array.isArray(product.category) ? product.category[0] : product.category}
+                  </span>
+                </div>
+              </div>
+
+              <div className="card-content">
+                <h3 className="product-title">{product.name}</h3>
+                <p className="product-description">{product.description}</p>
+                
+                <div className="product-specs">
+                  <div className="spec-item">
+                    <span className="spec-label">Strength:</span>
+                    <span className="spec-value">{product.specs.strength}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Grade:</span>
+                    <span className="spec-value">{product.specs.grade}</span>
+                  </div>
+                </div>
+
+                <div className="card-footer">
+                  <div className="pricing">
+                    <span className="price-label">Pricing:</span>
+                    <span className="price-value">{product.price}</span>
+                  </div>
+                  
+                  <div className="card-actions">
+                    {product.tds && (
+                      <button
+                        className="action-btn download-btn"
+                        onClick={(e) => handleDownload(e, product)}
+                        title="Download TDS"
+                      >
+                        <FontAwesomeIcon icon={faFileAlt} />
+                      </button>
+                    )}
+                    <button className="action-btn info-btn" title="View Details">
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
+      </div>
 
-        <div className="cta-section1">
-          <h3 className="cta-title1">Need Custom Solutions?</h3>
-          <p className="cta-description1">
-            Our technical team can develop specialized formulations tailored to your specific requirements.
-          </p>
+      {/* Product Modal */}
+      {selectedProduct && (
+        <div className="product-modal-overlay" onClick={() => setSelectedProduct(null)}>
+          <div className="product-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="modal-title-section">
+                <h2 className="modal-title">{selectedProduct.name}</h2>
+                <span className="modal-subtitle">Product #{String(selectedProduct.id).padStart(3, '0')}</span>
+              </div>
+              <button 
+                className="modal-close"
+                onClick={() => setSelectedProduct(null)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+
+            <div className="modal-content">
+              <div className="modal-image-section">
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  onError={(e) => {
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f1f5f9' stroke='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%23687280' text-anchor='middle' dy='.3em'%3EProduct Image%3C/text%3E%3C/svg%3E";
+                  }}
+                />
+              </div>
+
+              <div className="modal-details">
+                <div className="details-section">
+                  <h3>Product Description</h3>
+                  <p>{selectedProduct.description}</p>
+                </div>
+
+                <div className="details-section">
+                  <h3>Technical Specifications</h3>
+                  <div className="specs-list">
+                    <div className="spec-row">
+                      <span>Strength Grade:</span>
+                      <span>{selectedProduct.specs.strength}</span>
+                    </div>
+                    <div className="spec-row">
+                      <span>Temperature:</span>
+                      <span>{selectedProduct.specs.temp}</span>
+                    </div>
+                    <div className="spec-row">
+                      <span>Grade Type:</span>
+                      <span>{selectedProduct.specs.grade}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="details-section">
+                  <h3>Key Features</h3>
+                  <ul className="features-list">
+                    {selectedProduct.features.map((feature, idx) => (
+                      <li key={idx}>
+                        <FontAwesomeIcon icon={faCheck} className="feature-icon" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="details-section">
+                  <h3>Applications</h3>
+                  <div className="applications-tags">
+                    {selectedProduct.applications.map((app, idx) => (
+                      <span key={idx} className="app-tag">{app}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="modal-actions">
+                  {selectedProduct.tds && (
+                    <button
+                      className="primary-btn"
+                      onClick={(e) => handleDownload(e, selectedProduct)}
+                    >
+                      <FontAwesomeIcon icon={faFileAlt} /> Download Technical Data Sheet
+                    </button>
+                  )}
+                  <button className="secondary-btn">
+                    <FontAwesomeIcon icon={faPhone} /> Request Quote
+                  </button>
+                  <button className="secondary-btn">
+                    <FontAwesomeIcon icon={faEnvelope} /> Contact Technical Support
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Results Summary */}
+      <div className="results-summary">
+        <div className="summary-content">
+          <div className="results-count">
+            Showing <strong>{filteredProducts.length}</strong> of <strong>{products.length}</strong> products
+            {activeFilter !== 'all' && (
+              <span className="filter-info">
+                in <strong>{categories.find(c => c.key === activeFilter)?.label}</strong>
+              </span>
+            )}
+            {searchTerm && (
+              <span className="search-info">
+                matching "<strong>{searchTerm}</strong>"
+              </span>
+            )}
+          </div>
+          
+          <div className="summary-stats">
+            <div className="stat">
+              <span className="stat-number">{products.length}</span>
+              <span className="stat-label">Total Products</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">{categories.length - 1}</span>
+              <span className="stat-label">Categories</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">15+</span>
+              <span className="stat-label">Years Experience</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

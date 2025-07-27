@@ -85,7 +85,7 @@ const Home = () => {
 
   return (
     <section className="home-section" id="home">
-      {/* Background Images Container */}
+      {/* Background Images Container - Desktop/Tablet Only */}
       <div className="bg-images-container">
         {backgroundImages.map((image, index) => (
           <div
@@ -125,9 +125,21 @@ const Home = () => {
                 </p>
               </div>
 
+              {/* Mobile Image Gallery - Only visible on mobile */}
+              <div className="mobile-image-gallery">
+                {backgroundImages.map((src, i) => (
+                  <div key={i} className="gallery-card">
+                    <img src={src} alt={`Affix polymers ${i + 1}`} />
+                    <div className="gallery-overlay">
+                      <span className="gallery-text">Our Facility {i + 1}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               {/* Features Grid with manual mobile scrolling */}
               <div className="features-grid" ref={featuresGridRef}>
-                <IconContext.Provider value={{ className: "feature-icon", size: "24px" }}>
+                <IconContext.Provider value={{ className: "feature-icon1", size: "24px" }}>
                   {features.map((feature, index) => (
                     <div key={index} className="feature-item">
                       {feature.icon}
@@ -140,10 +152,10 @@ const Home = () => {
               {/* Enhanced CTA Section */}
               <div className="cta-section">
                 <div className="cta-buttons">
-                  <a href="#products" className="primary-btn">
+                  <a href="#products" className="primary-btn1">
                     Explore Products
                   </a>
-                  <a href="#contact" className="secondary-btn">
+                  <a href="#contact" className="secondary-btn1">
                     Request Quote
                   </a>
                 </div>
