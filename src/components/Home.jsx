@@ -11,6 +11,7 @@ const Home = () => {
   const fullText = "Affix Polymers";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
   const featuresGridRef = useRef(null);
 
   const backgroundImages = [bg1, bg2, bg4];
@@ -23,14 +24,16 @@ const Home = () => {
 
   // Email configuration - Update these with your details
   const EMAIL_CONFIG = {
-    to: 'affixpolymers@gmail.com', // Replace with your company email
+    to: 'affixpolymers@gmail.com',
     subject: 'General Quote Request - Affix Polymers',
     cc: '', // Optional CC email
     bcc: '' // Optional BCC email
   };
 
-  // Function to handle general quote request from home page
+  // Enhanced mobile-friendly email handler
   const handleGeneralQuoteRequest = () => {
+    setIsEmailLoading(true);
+
     const subject = EMAIL_CONFIG.subject;
     const body = `Dear Affix Polymers Team,
 
@@ -78,20 +81,58 @@ Best regards,
 [Your Company]
 [Your Contact Information]`;
 
-    // Construct Gmail URL
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Optional: Add CC and BCC if provided
-    let finalUrl = gmailUrl;
-    if (EMAIL_CONFIG.cc) {
-      finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
-    }
-    if (EMAIL_CONFIG.bcc) {
-      finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
-    }
+    try {
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      
+      if (isMobile) {
+        // Mobile devices: Use mailto directly
+        const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoUrl;
+        
+        // Show success message after a brief delay
+        setTimeout(() => {
+          setIsEmailLoading(false);
+        }, 1500);
+        
+      } else {
+        // Desktop: Try Gmail first, fallback to mailto
+        try {
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          
+          // Add CC and BCC if provided
+          let finalUrl = gmailUrl;
+          if (EMAIL_CONFIG.cc) {
+            finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
+          }
+          if (EMAIL_CONFIG.bcc) {
+            finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
+          }
 
-    // Open Gmail in new tab
-    window.open(finalUrl, '_blank');
+          const newWindow = window.open(finalUrl, '_blank');
+          
+          // If popup blocked or failed, use mailto
+          if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+          }
+          
+          setIsEmailLoading(false);
+          
+        } catch (error) {
+          // Fallback to mailto for desktop
+          const mailtoUrl = `mailto:${EMAIL_CONFIG.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = mailtoUrl;
+          setIsEmailLoading(false);
+        }
+      }
+    } catch (error) {
+      console.error('Email error:', error);
+      setIsEmailLoading(false);
+      
+      // Final fallback - show alert with email details
+      alert(`Please send an email to: ${EMAIL_CONFIG.to}\n\nSubject: ${subject}\n\nOr copy the email address and compose manually.`);
+    }
   };
 
   // Typing effect
@@ -129,20 +170,20 @@ Best regards,
       isDragging = true;
       startX = e.touches[0].pageX - featuresGrid.offsetLeft;
       scrollLeft = featuresGrid.scrollLeft;
-      featuresGrid.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
+      featuresGrid.style.scrollBehavior = 'auto';
     };
 
     const handleTouchMove = (e) => {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - featuresGrid.offsetLeft;
-      const walk = (x - startX) * 1.5; // Adjust scroll speed
+      const walk = (x - startX) * 1.5;
       featuresGrid.scrollLeft = scrollLeft - walk;
     };
 
     const handleTouchEnd = () => {
       isDragging = false;
-      featuresGrid.style.scrollBehavior = 'smooth'; // Re-enable smooth scroll
+      featuresGrid.style.scrollBehavior = 'smooth';
     };
 
     featuresGrid.addEventListener('touchstart', handleTouchStart);
@@ -222,7 +263,7 @@ Best regards,
                 </IconContext.Provider>
               </div>
 
-              {/* Enhanced CTA Section with Gmail Integration */}
+              {/* Enhanced CTA Section with Mobile-Friendly Email Integration */}
               <div className="cta-section">
                 <div className="cta-buttons">
                   <a href="#products" className="primary-btn1">
@@ -230,9 +271,10 @@ Best regards,
                   </a>
                   <button 
                     onClick={handleGeneralQuoteRequest}
-                    className="secondary-btn1 quote-btn-home"
+                    className={`secondary-btn1 quote-btn-home ${isEmailLoading ? 'loading' : ''}`}
+                    disabled={isEmailLoading}
                   >
-                    Request Quote via Email
+                    {isEmailLoading ? 'Opening Email...' : 'Request Quote via Email'}
                   </button>
                 </div>
                 
