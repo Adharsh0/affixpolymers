@@ -1,7 +1,7 @@
 /* Modern Product Showcase - Enhanced Responsive Version */
 .products-showcase {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(135deg, #e5e7eac8 0%, #f1f5f988 100%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   position: relative;
 }
@@ -71,25 +71,36 @@
   margin: 0 auto;
 }
 
-/* Search Bar - Enhanced */
+/* Controls Section */
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+/* Search Bar - Fully Responsive and Optimized */
 .search-container {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: min(90vw, 400px);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.7rem 2.5rem 0.7rem 1rem;
+  padding: clamp(0.65rem, 2vw, 0.8rem) clamp(2.5rem, 4vw, 3rem) clamp(0.65rem, 2vw, 0.8rem) clamp(1rem, 2.5vw, 1.2rem);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
+  border-radius: clamp(8px, 1.5vw, 12px);
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  font-size: 0.9rem;
-  backdrop-filter: blur(8px);
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  font-weight: 400;
 }
 
 .search-input::placeholder {
@@ -101,26 +112,29 @@
   outline: none;
   border-color: rgba(96, 165, 250, 0.8);
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+  box-shadow: 0 0 0 clamp(2px, 0.5vw, 4px) rgba(96, 165, 250, 0.15);
 }
 
 .search-icon {
   position: absolute;
-  right: 1.5rem;
+  right: clamp(1rem, 3vw, 1.5rem);
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 2vw, 1rem);
   opacity: 0.7;
-  width: 16px;
-  height: 16px;
+  width: clamp(16px, 3vw, 20px);
+  height: clamp(16px, 3vw, 20px);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s ease;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .search-input:focus + .search-icon {
   opacity: 0.9;
+  color: rgba(96, 165, 250, 0.8);
 }
 
 /* Category Tabs - Enhanced */
@@ -133,10 +147,12 @@
   background: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   backdrop-filter: blur(8px);
-  margin: 1.2rem 1rem 0;
+  margin: 0;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  width: 100%;
+  max-width: min(95vw, 1000px);
 }
 
 .category-tabs::-webkit-scrollbar {
@@ -707,6 +723,25 @@
   transform: translateY(-2px);
 }
 
+/* Enhanced Email Button Styles */
+.modal-actions .quote-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+  border: none;
+}
+
+.modal-actions .quote-btn:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+}
+
+.modal-actions .support-btn:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  color: #0284c7;
+}
+
 .secondary-btn svg, .primary-btn svg {
   width: 14px;
   height: 14px;
@@ -769,8 +804,58 @@
 }
 
 /* Responsive Design - Enhanced */
-@media (min-width: 481px) {
+@media (max-width: 480px) {
+  .search-container {
+    max-width: min(95vw, 320px);
+    padding: 0 0.5rem;
+  }
   
+  .search-input {
+    padding: 0.7rem 2.5rem 0.7rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+  
+  .search-icon {
+    right: 1rem;
+    width: 18px;
+    height: 18px;
+    font-size: 0.9rem;
+  }
+
+  .category-tabs {
+    padding: 0.6rem 0.8rem;
+    margin: 0;
+    border-radius: 10px;
+  }
+
+  .category-tab {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .search-container {
+    max-width: min(98vw, 280px);
+    padding: 0 0.3rem;
+  }
+  
+  .search-input {
+    padding: 0.65rem 2.3rem 0.65rem 0.9rem;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+  
+  .search-icon {
+    right: 0.9rem;
+    width: 16px;
+    height: 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 481px) {
   .showcase-header {
     padding: 3rem 1.5rem 2rem;
   }
@@ -891,7 +976,6 @@
   .card-header {
     height: 220px;
   }
-  
 }
 
 @media (min-width: 1025px) {
@@ -903,242 +987,46 @@
     font-size: 2.8rem;
   }
 }
-/* Updated Search Bar for Mobile */
-@media (max-width: 480px) {
-  .search-container {
-    max-width: 280px; /* Reduced from full width */
-    padding: 0; /* Remove side padding */
-  }
-  
-  .search-input {
-    padding: 0.6rem 2rem 0.6rem 0.8rem; /* Smaller padding */
-    font-size: 0.85rem; /* Slightly smaller font */
-  }
-  
-  .search-icon {
-    right: 0.8rem; /* Adjust icon position */
-    width: 16px;
-    height: 16px;
-  }
-}
-
-/* For very small screens (under 360px) */
-@media (max-width: 360px) {
-  .search-container {
-    max-width: 240px; /* Even more compact */
-  }
-  
-  .search-input {
-    padding: 0.5rem 1.8rem 0.5rem 0.7rem;
-    font-size: 0.82rem;
-  }
-  
-  .search-icon {
-    right: 0.7rem;
-    width: 14px;
-    height: 14px;
-  }
-}
-/* Search Bar - Fully Responsive */
-.search-container {
-  position: relative;
-  width: 100%;
-  max-width: min(90vw, 400px); /* Scales with viewport but caps at 400px */
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.search-input {
-  width: 100%;
-  padding: clamp(0.6rem, 2vw, 0.8rem) clamp(2.2rem, 4vw, 2.8rem) clamp(0.6rem, 2vw, 0.8rem) clamp(0.8rem, 2.5vw, 1.2rem);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: clamp(6px, 1.5vw, 10px);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: clamp(0.8rem, 2.2vw, 1rem);
-  backdrop-filter: blur(8px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 400;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: rgba(96, 165, 250, 0.8);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 clamp(2px, 0.5vw, 4px) rgba(96, 165, 250, 0.15);
-}
-
-.search-icon {
-  position: absolute;
-  right: clamp(1.2rem, 3vw, 1.8rem);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: clamp(0.8rem, 2vw, 1rem);
-  opacity: 0.7;
-  width: clamp(14px, 3vw, 18px);
-  height: clamp(14px, 3vw, 18px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-.search-input:focus + .search-icon {
-  opacity: 0.9;
-}
-
-/* Mobile First Approach - Base styles for mobile */
-@media (max-width: 480px) {
-  .search-container {
-    max-width: min(85vw, 300px);
-    padding: 0 0.5rem;
-  }
-  
-  .search-input {
-    padding: 0.65rem 2.2rem 0.65rem 0.9rem;
-    font-size: 0.88rem;
-    border-radius: 8px;
-  }
-  
-  .search-icon {
-    right: 1rem;
-    width: 16px;
-    height: 16px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 360px) {
-  .search-container {
-    max-width: min(90vw, 260px);
-    padding: 0 0.3rem;
-  }
-  
-  .search-input {
-    padding: 0.6rem 2rem 0.6rem 0.8rem;
-    font-size: 0.85rem;
-    border-radius: 7px;
-  }
-  
-  .search-icon {
-    right: 0.9rem;
-    width: 15px;
-    height: 15px;
-    font-size: 0.85rem;
-  }
-}
 
 /* Tablet Portrait */
 @media (min-width: 481px) and (max-width: 768px) {
   .search-container {
-    max-width: min(70vw, 350px);
+    max-width: min(70vw, 380px);
     padding: 0 0.8rem;
   }
   
   .search-input {
     padding: 0.75rem 2.5rem 0.75rem 1rem;
-    font-size: 0.92rem;
-    border-radius: 9px;
-  }
-  
-  .search-icon {
-    right: 1.3rem;
-    width: 17px;
-    height: 17px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Tablet Landscape & Small Desktop */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .search-container {
-    max-width: min(60vw, 380px);
-    padding: 0 1rem;
-  }
-  
-  .search-input {
-    padding: 0.8rem 2.6rem 0.8rem 1.1rem;
     font-size: 0.95rem;
     border-radius: 10px;
   }
   
   .search-icon {
-    right: 1.4rem;
+    right: 1.3rem;
     width: 18px;
     height: 18px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 }
 
 /* Desktop */
 @media (min-width: 1025px) {
   .search-container {
-    max-width: min(50vw, 400px);
+    max-width: min(50vw, 420px);
     padding: 0 1rem;
   }
   
   .search-input {
-    padding: 0.85rem 2.8rem 0.85rem 1.2rem;
+    padding: 0.8rem 2.8rem 0.8rem 1.2rem;
     font-size: 1rem;
-    border-radius: 10px;
+    border-radius: 12px;
   }
   
   .search-icon {
     right: 1.5rem;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     font-size: 1rem;
-  }
-}
-
-/* Large Desktop */
-@media (min-width: 1441px) {
-  .search-container {
-    max-width: min(40vw, 420px);
-  }
-  
-  .search-input {
-    padding: 0.9rem 3rem 0.9rem 1.3rem;
-    font-size: 1.05rem;
-  }
-  
-  .search-icon {
-    right: 1.6rem;
-    width: 19px;
-    height: 19px;
-    font-size: 1.05rem;
-  }
-}
-
-/* Ultra-wide Screens */
-@media (min-width: 1920px) {
-  .search-container {
-    max-width: min(35vw, 450px);
-  }
-}
-
-/* Landscape orientation adjustments for mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .search-container {
-    max-width: min(50vw, 320px);
-  }
-  
-  .search-input {
-    padding: 0.6rem 2.2rem 0.6rem 0.9rem;
-    font-size: 0.87rem;
-  }
-  
-  .search-icon {
-    right: 1.1rem;
-    width: 16px;
-    height: 16px;
   }
 }
 
@@ -1165,16 +1053,27 @@
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .search-input,
-  .search-icon {
+  .search-icon,
+  .product-card,
+  .category-tab {
     transition: none;
+  }
+  
+  .product-card {
+    animation: none;
   }
 }
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   .search-input {
-    min-height: 44px; /* Ensure minimum touch target size */
-    padding-top: max(0.6rem, calc((44px - 1em) / 2));
-    padding-bottom: max(0.6rem, calc((44px - 1em) / 2));
+    min-height: 48px;
+    padding-top: max(0.7rem, calc((48px - 1em) / 2));
+    padding-bottom: max(0.7rem, calc((48px - 1em) / 2));
+  }
+  
+  .category-tab {
+    min-height: 44px;
+    padding: 0.6rem 0.8rem;
   }
 }

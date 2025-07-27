@@ -21,6 +21,79 @@ const Home = () => {
     { icon: <FiPackage />, text: "Wide Product Range" }
   ];
 
+  // Email configuration - Update these with your details
+  const EMAIL_CONFIG = {
+    to: 'affixpolymers@gmail.com', // Replace with your company email
+    subject: 'General Quote Request - Affix Polymers',
+    cc: '', // Optional CC email
+    bcc: '' // Optional BCC email
+  };
+
+  // Function to handle general quote request from home page
+  const handleGeneralQuoteRequest = () => {
+    const subject = EMAIL_CONFIG.subject;
+    const body = `Dear Affix Polymers Team,
+
+I am interested in learning more about your polymer solutions and would like to request a quote.
+
+Company Information:
+- Company Name: [Please specify]
+- Industry: [Please specify]
+- Contact Person: [Please specify]
+- Phone Number: [Please specify]
+- Email: [Please specify]
+
+Requirements:
+- Product Category: [Please specify - Adhesives/Compounds/Specialty Chemicals]
+- Application: [Please describe your specific application]
+- Quantity Required: [Please specify]
+- Delivery Location: [Please specify]
+- Timeline: [Please specify]
+- Technical Requirements: [Please describe any specific requirements]
+
+Additional Information:
+- Current Supplier (if any): [Please specify]
+- Budget Range: [Please specify]
+- Special Requirements: [Please specify]
+- Preferred Contact Method: [Email/Phone]
+
+About Your Business:
+- Years in Operation: [Please specify]
+- Business Type: [Manufacturer/Distributor/End User]
+- Annual Volume: [Please specify]
+
+I would appreciate receiving:
+- Product catalog and technical data sheets
+- Pricing information
+- Sample availability
+- Delivery timeline
+- Technical support information
+
+Please contact me at your earliest convenience to discuss our requirements in detail.
+
+Thank you for your time and consideration.
+
+Best regards,
+[Your Name]
+[Your Company]
+[Your Contact Information]`;
+
+    // Construct Gmail URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Optional: Add CC and BCC if provided
+    let finalUrl = gmailUrl;
+    if (EMAIL_CONFIG.cc) {
+      finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
+    }
+    if (EMAIL_CONFIG.bcc) {
+      finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
+    }
+
+    // Open Gmail in new tab
+    window.open(finalUrl, '_blank');
+  };
+
   // Typing effect
   useEffect(() => {
     if (currentIndex < fullText.length) {
@@ -149,15 +222,18 @@ const Home = () => {
                 </IconContext.Provider>
               </div>
 
-              {/* Enhanced CTA Section */}
+              {/* Enhanced CTA Section with Gmail Integration */}
               <div className="cta-section">
                 <div className="cta-buttons">
                   <a href="#products" className="primary-btn1">
                     Explore Products
                   </a>
-                  <a href="#contact" className="secondary-btn1">
-                    Request Quote
-                  </a>
+                  <button 
+                    onClick={handleGeneralQuoteRequest}
+                    className="secondary-btn1 quote-btn-home"
+                  >
+                    Request Quote via Email
+                  </button>
                 </div>
                 
                 {/* Enhanced Stats Section */}

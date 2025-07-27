@@ -24,6 +24,7 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Complete products array
   const products = [
     {
       id: 1,
@@ -167,6 +168,99 @@ const Products = () => {
     return matchesCategory && matchesSearch;
   });
 
+  // Email configuration - Update these with your details
+  const EMAIL_CONFIG = {
+    to: 'affixpolymers@gmail.com', // Replace with your company email
+    subject: 'Product Quote Request - ',
+    cc: '', // Optional CC email
+    bcc: '' // Optional BCC email
+  };
+
+  // Function to handle quote request
+  const handleQuoteRequest = (product) => {
+    const subject = `${EMAIL_CONFIG.subject}${product.name}`;
+    const body = `Dear Team,
+
+I would like to request a quote for the following product:
+
+Product Details:
+- Product Name: ${product.name}
+- Product ID: #${String(product.id).padStart(3, '0')}
+- Description: ${product.description}
+- Strength Grade: ${product.specs.strength}
+- Temperature: ${product.specs.temp}
+- Grade Type: ${product.specs.grade}
+
+Key Features:
+${product.features.map(feature => `- ${feature}`).join('\n')}
+
+Applications:
+${product.applications.map(app => `- ${app}`).join('\n')}
+
+Additional Information:
+- Quantity Required: [Please specify]
+- Delivery Location: [Please specify]
+- Timeline: [Please specify]
+- Special Requirements: [Please specify]
+
+Please provide detailed pricing, availability, and delivery information.
+
+Thank you for your time and assistance.
+
+Best regards,
+[Your Name]
+[Your Company]
+[Your Contact Information]`;
+
+    // Construct Gmail URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Optional: Add CC and BCC if provided
+    let finalUrl = gmailUrl;
+    if (EMAIL_CONFIG.cc) {
+      finalUrl += `&cc=${encodeURIComponent(EMAIL_CONFIG.cc)}`;
+    }
+    if (EMAIL_CONFIG.bcc) {
+      finalUrl += `&bcc=${encodeURIComponent(EMAIL_CONFIG.bcc)}`;
+    }
+
+    // Open Gmail in new tab
+    window.open(finalUrl, '_blank');
+  };
+
+  // Function to handle technical support contact
+  const handleTechnicalSupport = (product) => {
+    const subject = `Technical Support Request - ${product.name}`;
+    const body = `Dear Technical Support Team,
+
+I need technical assistance regarding the following product:
+
+Product Details:
+- Product Name: ${product.name}
+- Product ID: #${String(product.id).padStart(3, '0')}
+- Description: ${product.description}
+
+Technical Query:
+[Please describe your technical question or issue here]
+
+Application Details:
+- Intended Use: [Please specify]
+- Operating Conditions: [Please specify]
+- Current Challenges: [Please specify]
+
+Please provide technical guidance and recommendations.
+
+Thank you for your support.
+
+Best regards,
+[Your Name]
+[Your Company]
+[Your Contact Information]`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_CONFIG.to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailUrl, '_blank');
+  };
+
   const handleDownload = async (e, product) => {
     e.preventDefault();
     e.stopPropagation();
@@ -267,7 +361,6 @@ const Products = () => {
                       e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='160' viewBox='0 0 200 160'%3E%3Crect width='200' height='160' fill='%23f1f5f9' stroke='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='%23687280' text-anchor='middle' dy='.3em'%3EProduct Image%3C/text%3E%3C/svg%3E";
                     }}
                   />
-                 
                 </div>
                 
                 <div className="card-badge">
@@ -320,7 +413,7 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Product Modal */}
+      {/* Enhanced Product Modal with Email Integration */}
       {selectedProduct && (
         <div className="product-modal-overlay" onClick={() => setSelectedProduct(null)}>
           <div className="product-modal" onClick={(e) => e.stopPropagation()}>
@@ -393,6 +486,7 @@ const Products = () => {
                   </div>
                 </div>
 
+                {/* Enhanced Modal Actions with Email Integration */}
                 <div className="modal-actions">
                   {selectedProduct.tds && (
                     <button
@@ -402,11 +496,17 @@ const Products = () => {
                       <FontAwesomeIcon icon={faFileAlt} /> Download Technical Data Sheet
                     </button>
                   )}
-                  <button className="secondary-btn">
-                    <FontAwesomeIcon icon={faPhone} /> Request Quote
+                  <button 
+                    className="secondary-btn quote-btn"
+                    onClick={() => handleQuoteRequest(selectedProduct)}
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} /> Request Quote via Email
                   </button>
-                  <button className="secondary-btn">
-                    <FontAwesomeIcon icon={faEnvelope} /> Contact Technical Support
+                  <button 
+                    className="secondary-btn support-btn"
+                    onClick={() => handleTechnicalSupport(selectedProduct)}
+                  >
+                    <FontAwesomeIcon icon={faPhone} /> Contact Technical Support
                   </button>
                 </div>
               </div>
