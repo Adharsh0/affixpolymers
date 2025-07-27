@@ -1372,11 +1372,11 @@
 
   .primary-btn1,
   .secondary-btn1 {
-    width: 100%;
-    max-width: 280px;
+    width: 70%;
+    max-width: 200px;
     padding: 14px 24px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 12px;
     min-height: 48px;
     display: flex;
