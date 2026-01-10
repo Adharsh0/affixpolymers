@@ -199,7 +199,7 @@ Best regards,
 
   return (
     <section className="home-section" id="home">
-      {/* Background Images Container - Desktop/Tablet Only */}
+      {/* Background Images Container - For both Desktop and Mobile */}
       <div className="bg-images-container">
         {backgroundImages.map((image, index) => (
           <div
@@ -237,18 +237,6 @@ Best regards,
                     Premium polymer compounds manufacturer with 30+ years of expertise in formulation and production
                   </span>
                 </p>
-              </div>
-
-              {/* Mobile Image Gallery - Only visible on mobile */}
-              <div className="mobile-image-gallery">
-                {backgroundImages.map((src, i) => (
-                  <div key={i} className="gallery-card">
-                    <img src={src} alt={`Affix polymers ${i + 1}`} />
-                    <div className="gallery-overlay">
-                      <span className="gallery-text">Our Facility {i + 1}</span>
-                    </div>
-                  </div>
-                ))}
               </div>
 
               {/* Features Grid with manual mobile scrolling */}
