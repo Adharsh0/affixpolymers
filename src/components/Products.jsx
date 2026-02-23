@@ -25,7 +25,7 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isEmailLoading, setIsEmailLoading] = useState(false);
 
-  // Complete products array (keeping your existing products)
+
   const products = [
     {
       id: 1,
@@ -46,7 +46,7 @@ const Products = () => {
       description: "AFFIX AP-340 is specially manufactured solution used to bind HR and SHR belt joint and pulley lagging",
       features: ["inflammable", "UV Resistant", "peeling strength:5.5-7.6"],
       image: "/images/affixap-340.jpeg",
-      tds: "/tds/ap340.docx",
+      tds: "/AFFIX_AP-340_TDS.pdf",
       specs: { strength: "Medium", temp: "Variable", grade: "HR/SHR" },
       price: "Contact for Quote",
       applications: ["HR Belt Systems", "Lagging Applications", "UV Exposed Areas"]
@@ -70,7 +70,7 @@ const Products = () => {
       description: "AFFIX AP-390 sfr is specially manufactured fire retardant solution used to bind SHR and UHR belt joint and pulley lagging",
       features: ["non-flammable", "peeling strength:5.5-7.5"],
       image: "/images/affixap-390.jpg",
-      tds: "/tds/390sfr.docx",
+      tds: "/AFFIX_AP-390_SFR_TDS.pdf",
       specs: { strength: "Ultra High", temp: "High Temp", grade: "Fire Retardant" },
       price: "Contact for Quote",
       applications: ["Fire Safety Systems", "High Temperature", "Safety Critical"]
