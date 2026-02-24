@@ -26,9 +26,8 @@ const Home = () => {
         <div className="container">
           <div className="hero-wrapper">
             <div className="hero-left">
-              <span className="badge">
-                <FiStar /> Trusted Since 1990
-              </span>
+             <br></br>
+             <br></br>
 
               <h1 className="title">
                 Premium Polymer Solutions

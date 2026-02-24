@@ -27,14 +27,14 @@ body {
 
 /* Overlay above 3D */
 .dark-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.65);
   z-index: 1;
-  pointer-events: none;   /* VERY IMPORTANT */
+  pointer-events: none;
 }
 
 .container,
@@ -226,41 +226,45 @@ body {
   margin-right: auto;
 }
 
-/* Responsive - Perfect for all devices */
-@media (max-width: 1024px) {
-  .hero-wrapper {
-    grid-template-columns: 1fr 0.9fr;
-    gap: 3rem;
-  }
-}
-
+/* ===== IMPROVED MOBILE RESPONSIVE ===== */
 @media (max-width: 968px) {
   .hero-wrapper {
     grid-template-columns: 1fr;
-    text-align: center;
-    gap: 3rem;
+    text-align: left; /* Changed from center to left */
+    gap: 2.5rem;
   }
 
   .hero-left {
-    max-width: 700px;
-    margin: 0 auto;
-    justify-self: center;
+    max-width: 100%;
+    margin: 0;
+    justify-self: start;
+    padding: 0 0.5rem;
   }
 
   .hero-right {
-    max-width: 400px;
-    margin: 0 auto;
-    justify-self: center;
+    max-width: 100%;
+    margin: 0;
+    justify-self: start;
+    padding: 0 0.5rem;
   }
 
   .badge {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0; /* Removed auto margin */
+    margin-right: 0;
   }
 
   .description {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+
+  .title {
+    text-align: left;
+  }
+
+  .highlight {
+    text-align: left;
   }
 }
 
@@ -273,9 +277,58 @@ body {
     padding: 3rem 0;
   }
 
+  .hero-wrapper {
+    gap: 2rem;
+  }
+
+  .hero-left {
+    padding: 0;
+  }
+
+  .hero-right {
+    padding: 0;
+  }
+
+  .badge {
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .highlight {
+    margin-top: 0.15rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
   .btn-large {
     min-width: 240px;
     padding: 1rem 2rem;
+  }
+
+  /* CTA section mobile improvements */
+  .cta {
+    padding: 3.5rem 0;
+  }
+
+  .cta h2 {
+    font-size: 1.8rem;
+    padding: 0 0.5rem;
+  }
+
+  .cta p {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 }
 
@@ -284,18 +337,111 @@ body {
     padding: 0 1.2rem;
   }
 
+  .hero-wrapper {
+    gap: 1.8rem;
+  }
+
   .badge {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.9rem;
     font-size: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .btn {
     padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
   }
 
   .btn-large {
     width: 100%;
     min-width: auto;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Stack buttons vertically on very small screens */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  /* CTA section for very small screens */
+  .cta {
+    padding: 2.5rem 0;
+  }
+
+  .cta h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+
+  .hero-wrapper {
+    gap: 1.5rem;
+  }
+
+  .badge {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -311,5 +457,25 @@ body {
 
   .title {
     font-size: 4.2rem;
+  }
+}
+
+/* Tablet specific improvements */
+@media (min-width: 769px) and (max-width: 968px) {
+  .hero-left {
+    max-width: 90%;
+  }
+
+  .title {
+    font-size: 2.8rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    max-width: 90%;
+  }
+
+  .hero-right {
+    max-width: 80%;
   }
 }
