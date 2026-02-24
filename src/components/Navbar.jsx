@@ -4,198 +4,188 @@ import logoImage from '../assets/affixlogo1.jpeg';
 import { 
   Home, 
   UserCircle, 
-  Box, 
+  Package, 
   Phone,
   X, 
-  Menu
+  Menu,
+  ChevronRight,
+  Sparkles
 } from 'lucide-react';
 import "./Navbar.css";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const menuRef = useRef(null);
   const hamburgerRef = useRef(null);
   const location = useLocation();
-  const scrollTimeoutRef = useRef(null);
 
-  // Check screen size for mobile view
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-      clearTimeout(scrollTimeoutRef.current);
-    };
-  }, []);
-
-  // Handle scroll effect
+  // Handle scroll effect and active section
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      // Update scrolled state
+      setScrolled(window.scrollY > 50);
+
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'products', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleScroll = (sectionId) => {
-    // Clear any pending scroll timeouts
-    clearTimeout(scrollTimeoutRef.current);
-    
-    // Close menu immediately
     setIsMobileMenuOpen(false);
     
-    // Wait for the menu to close before scrolling
-    scrollTimeoutRef.current = setTimeout(() => {
+    setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ 
-          behavior: "smooth", 
-          block: "start" 
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
         });
-        
-        // Force a reflow to ensure smooth scrolling works
-        element.getBoundingClientRect();
       }
-    }, 300); // Match this duration with your CSS transition time
+    }, 100);
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : 'unset';
   };
 
-  const closeMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
-  // Close menu when clicking outside or pressing Escape
+  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target) && 
           hamburgerRef.current && !hamburgerRef.current.contains(event.target)) {
-        closeMenu();
-      }
-    };
-
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        closeMenu();
-        hamburgerRef.current?.focus();
+        setIsMobileMenuOpen(false);
+        document.body.style.overflow = 'unset';
       }
     };
 
     if (isMobileMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleEscape);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscape);
     };
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { type: 'scroll', target: 'home', label: 'Home', Icon: Home },
-    { type: 'scroll', target: 'about', label: 'About', Icon: UserCircle },
-    { type: 'scroll', target: 'products', label: 'Products', Icon: Box },
-    { type: 'scroll', target: 'contact', label: 'Contact', Icon: Phone },
+    { id: 'home', label: 'Home', Icon: Home },
+    { id: 'about', label: 'About Us', Icon: UserCircle },
+    { id: 'products', label: 'Products', Icon: Package },
+    { id: 'contact', label: 'Contact', Icon: Phone },
   ];
 
-  if (isMobile) {
-    return (
-      <>
-        <div className="mobile-nav-container">
-          <button 
-            ref={hamburgerRef}
-            onClick={toggleMobileMenu}
-            className={`floating-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+  return (
+    <>
+      {/* Desktop Navigation */}
+      <nav className={`desktop-nav2 ${scrolled ? 'scrolled2' : ''}`}>
+        <div className="nav-container2">
+          <div className="nav-logo2" onClick={() => handleScroll('home')}>
+            <img src={logoImage} alt="Affix Polymers" className="logo-image2" />
+            <span className="logo-text2">Affix Polymers</span>
+          </div>
 
-          
-
-          <div 
-            ref={menuRef}
-            className={`radial-menu ${isMobileMenuOpen ? 'open' : ''}`}
-            aria-hidden={!isMobileMenuOpen}
-          >
-            {navItems.map((item, index) => (
+          <div className="nav-menu2">
+            {navItems.map((item) => (
               <button
-                key={item.target}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleScroll(item.target);
-                }}
-                className="radial-menu-item"
-                style={{
-                  '--item-index': index
-                }}
-                aria-label={`Scroll to ${item.label} section`}
+                key={item.id}
+                onClick={() => handleScroll(item.id)}
+                className={`nav-link2 ${activeSection === item.id ? 'active2' : ''}`}
               >
-                <item.Icon size={18} className="item-icon" />
-                <span className="item-text">
-                  {item.label}
-                </span>
+                <item.Icon size={18} className="nav-icon2" />
+                <span>{item.label}</span>
+                <span className="nav-indicator2"></span>
               </button>
             ))}
           </div>
-
-          {isMobileMenuOpen && (
-            <div 
-              className="menu-backdrop"
-              onClick={closeMenu}
-              role="button"
-              tabIndex="0"
-              aria-label="Close menu"
-              onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
-            />
-          )}
         </div>
-      </>
-    );
-  }
+      </nav>
 
-  // Desktop Navigation
-  return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-container">
-        <div className="navbar-brand">
-          <img 
-            src={logoImage} 
-            alt="Affix Polymers Logo" 
-            className="navbar-logo"
-            onClick={() => handleScroll('home')}
-            tabIndex="0"
-            onKeyDown={(e) => e.key === 'Enter' && handleScroll('home')}
-          />
+      {/* Mobile Navigation */}
+      <nav className={`mobile-nav2 ${scrolled ? 'scrolled2' : ''}`}>
+        <div className="mobile-nav-container2">
+          <div className="mobile-nav-logo2" onClick={() => handleScroll('home')}>
+            <img src={logoImage} alt="Affix Polymers" className="mobile-logo-image2" />
+            <span className="mobile-logo-text2">Affix</span>
+          </div>
+
+          <button
+            ref={hamburgerRef}
+            onClick={toggleMobileMenu}
+            className={`hamburger-btn2 ${isMobileMenuOpen ? 'active2' : ''}`}
+            aria-label="Toggle menu"
+          >
+            <div className="hamburger-lines2">
+              <span className="line2"></span>
+              <span className="line2"></span>
+              <span className="line2"></span>
+            </div>
+          </button>
         </div>
 
-        <ul className="navbar-nav">
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <button
-                onClick={() => handleScroll(item.target)}
-                className="nav-link"
-                aria-label={`Scroll to ${item.label} section`}
-              >
-                {item.label}
-                <span className="nav-dot"></span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+        {/* Mobile Menu Overlay */}
+        <div className={`mobile-menu-overlay2 ${isMobileMenuOpen ? 'active2' : ''}`}>
+          <div ref={menuRef} className="mobile-menu-content2">
+            <div className="mobile-menu-header2">
+              <img src={logoImage} alt="Affix Polymers" className="menu-logo2" />
+              <h3>Affix Polymers</h3>
+              <p>Premium Polymer Solutions</p>
+            </div>
+
+            <div className="mobile-menu-items2">
+              {navItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleScroll(item.id)}
+                  className={`mobile-menu-item2 ${activeSection === item.id ? 'active2' : ''}`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <item.Icon size={20} />
+                  <span>{item.label}</span>
+                  <ChevronRight size={16} className="item-arrow2" />
+                </button>
+              ))}
+            </div>
+
+            <div className="mobile-menu-footer2">
+              <div className="footer-info2">
+                <Sparkles size={16} />
+                <span>Premium Quality Since 2020</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
